@@ -5,6 +5,7 @@ Tags: title, accessibility, accessible, navigation, wcag, a11y
 Requires at least: 3.4.2
 Tested up to: 3.4.2
 Stable tag: trunk
+License: GPLv2 or later
 
 WP Accessibility provides options to improve accessibility issues in your WordPress site. 
 
@@ -32,6 +33,12 @@ The plug-in is intended to make up for some deficiencies commonly found in theme
 2. Login to your WordPress dashboard, click "Plugins", and activate WP Accessibility.
 2. Customise your settings on the Settings > WP Accessibility page.
 
+== Changelog ==
+
+= 1.0.0 =
+
+* Initial release!
+
 == Frequently Asked Questions ==
 
 = WP Accessibility is inserting some information via javascript. Is this really accessible? =
@@ -42,14 +49,10 @@ Yes. It does require that the user is operating a device that has javascript sup
 
 Even if WP Accessibility is running correctly, not all accessibility testing tools will be aware of the fixes. Here's a resource for more information: [Mother Effing Tool Confuser](http://mothereffingtoolconfuser.com/).
 
-== Changelog ==
-
-= 1.0.0 =
-
-* Initial release!
-
 == Screenshots ==
 
 1. Settings Page
 
 == Upgrade Notice ==
+
+* No notices yet!
