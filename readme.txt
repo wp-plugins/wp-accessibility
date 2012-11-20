@@ -42,6 +42,11 @@ Translating my plug-ins is always appreciated. Visit <a href="http://translate.j
 
 == Changelog ==
 
+= 1.1.1 =
+
+* Bug fix: extra template loaded when search template is inserted.
+* Bug fix: jQuery not always loaded when required.
+
 = 1.1.0 =
 
 * Added ability to add focus outline in :focus pseudo class.
