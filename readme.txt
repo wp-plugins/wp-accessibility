@@ -28,6 +28,7 @@ At the moment, the plug-in can:
 * Add post titles to standard "read more" links.
 * Add an outline to the keyboard focus state for focusable elements. 
 * Show the color contrast between two provided hexadecimal color values.
+* Read more about <a href="http://make.wordpress.org/accessibility/wp-accessibility-plugin/">the accessibility problems corrected</a>
 
 The plug-in is intended to make up for some deficiencies commonly found in themes. It can't correct every problem (by a long shot), but can provide some assistance.
 
