@@ -3,11 +3,11 @@ Contributors: joedolson
 Donate link: http://www.joedolson.com/donate.php
 Tags: title, accessibility, accessible, navigation, wcag, a11y
 Requires at least: 3.4.2
-Tested up to: 3.4.2
+Tested up to: 3.5.0
 Stable tag: trunk
 License: GPLv2 or later
 
-WP Accessibility provides options to improve accessibility issues in your WordPress site. 
+WP Accessibility provides features that fix accessibility issues in your WordPress site. 
 
 == Description ==
 
@@ -42,6 +42,11 @@ Translating my plug-ins is always appreciated. Visit <a href="http://translate.j
 2. Customise your settings on the Settings > WP Accessibility page.
 
 == Changelog ==
+
+= 1.1.2 =
+
+* Update support statement to WP 3.5.0
+* Add role='navigation' to skiplinks container.
 
 = 1.1.1 =
 
