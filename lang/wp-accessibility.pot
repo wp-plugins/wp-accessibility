@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the WP Accessibility package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Accessibility 1.2.0\n"
+"Project-Id-Version: WP Accessibility 1.2.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-accessibility\n"
-"POT-Creation-Date: 2013-02-09 22:34:28+00:00\n"
+"POT-Creation-Date: 2013-02-22 23:07:09+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,193 +12,195 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: wp-accessibility.php:72
+#: wp-accessibility.php:71
 msgid "Accessibility Settings"
 msgstr ""
 
-#: wp-accessibility.php:159
+#: wp-accessibility.php:158
 msgid "Toggle High Contrast"
 msgstr ""
 
-#: wp-accessibility.php:160
+#: wp-accessibility.php:159
 msgid "Toggle Grayscale"
 msgstr ""
 
-#: wp-accessibility.php:161
+#: wp-accessibility.php:160
 msgid "Toggle Font size"
 msgstr ""
 
-#: wp-accessibility.php:232
+#: wp-accessibility.php:231
 msgid "Skip to content"
 msgstr ""
 
-#: wp-accessibility.php:234
+#: wp-accessibility.php:233
 msgid "Skip to navigation"
 msgstr ""
 
-#: wp-accessibility.php:236
+#: wp-accessibility.php:235
 msgid "Site map"
 msgstr ""
 
-#: wp-accessibility.php:398
+#: wp-accessibility.php:395
 msgid "Remove Title Attributes Settings Updated"
 msgstr ""
 
-#: wp-accessibility.php:418
+#: wp-accessibility.php:415
 msgid ""
 "WP Accessibility does not provide any styles for visible skiplinks. You can "
 "still set the look of the links using the textareas provided, but all other "
 "layout must be assigned in your theme."
 msgstr ""
 
-#: wp-accessibility.php:422
+#: wp-accessibility.php:419
 msgid "Add Skiplinks Settings Updated"
 msgstr ""
 
-#: wp-accessibility.php:448
+#: wp-accessibility.php:447
 msgid "Miscellaneous Accessibility Settings Updated"
 msgstr ""
 
-#: wp-accessibility.php:531
+#: wp-accessibility.php:530
 msgid "WP Accessibility: Settings"
 msgstr ""
 
-#: wp-accessibility.php:536
+#: wp-accessibility.php:535
 msgid "Remove Title Attributes"
 msgstr ""
 
-#: wp-accessibility.php:540
+#: wp-accessibility.php:539
 msgid "Remove title attributes from:"
 msgstr ""
 
-#: wp-accessibility.php:542
+#: wp-accessibility.php:541
 msgid "Nav menus"
 msgstr ""
 
-#: wp-accessibility.php:543
+#: wp-accessibility.php:542
 msgid "Page lists"
 msgstr ""
 
-#: wp-accessibility.php:544
+#: wp-accessibility.php:543
 msgid "Category lists"
 msgstr ""
 
-#: wp-accessibility.php:545
+#: wp-accessibility.php:544
 msgid "Archive links"
 msgstr ""
 
-#: wp-accessibility.php:546
+#: wp-accessibility.php:545
 msgid "Tag clouds"
 msgstr ""
 
-#: wp-accessibility.php:547
+#: wp-accessibility.php:546
 msgid "Category links"
 msgstr ""
 
-#: wp-accessibility.php:548
+#: wp-accessibility.php:547
 msgid "Post edit links"
 msgstr ""
 
-#: wp-accessibility.php:549
+#: wp-accessibility.php:548
 msgid "Edit comment links"
 msgstr ""
 
-#: wp-accessibility.php:556
+#: wp-accessibility.php:555
 msgid "Update Title Attribute Settings"
 msgstr ""
 
-#: wp-accessibility.php:562
+#: wp-accessibility.php:561
 msgid "Add Skiplinks"
 msgstr ""
 
-#: wp-accessibility.php:566
+#: wp-accessibility.php:565
 msgid "Configure Skiplinks"
 msgstr ""
 
-#: wp-accessibility.php:568
+#: wp-accessibility.php:567
 msgid "Enable Skiplinks"
 msgstr ""
 
-#: wp-accessibility.php:569
+#: wp-accessibility.php:568
 msgid "Skiplinks always visible"
 msgstr ""
 
-#: wp-accessibility.php:570
+#: wp-accessibility.php:569
 msgid "Skip to Content link target (ID of your main content container)"
 msgstr ""
 
-#: wp-accessibility.php:571
+#: wp-accessibility.php:570
 msgid "Skip to Navigation link target (ID of your main navigation container)"
 msgstr ""
 
-#: wp-accessibility.php:572
+#: wp-accessibility.php:571
 msgid "Site Map link target (URL for your site map)"
 msgstr ""
 
-#: wp-accessibility.php:573
+#: wp-accessibility.php:572
 msgid "Add your own link (link or container ID)"
 msgstr ""
 
-#: wp-accessibility.php:573
+#: wp-accessibility.php:572
 msgid "Link text for your link"
 msgstr ""
 
-#: wp-accessibility.php:574
+#: wp-accessibility.php:573
 msgid "Styles for Skiplinks when they have focus"
 msgstr ""
 
-#: wp-accessibility.php:576
+#: wp-accessibility.php:575
 msgid "(Not currently visible)"
 msgstr ""
 
-#: wp-accessibility.php:577
+#: wp-accessibility.php:576
 msgid "Styles for Skiplinks without focus"
 msgstr ""
 
-#: wp-accessibility.php:585
+#: wp-accessibility.php:584
 msgid "Update Skiplink Settings"
 msgstr ""
 
-#: wp-accessibility.php:591
+#: wp-accessibility.php:590
 msgid "Miscellaneous Accessibility Settings"
 msgstr ""
 
-#: wp-accessibility.php:595
+#: wp-accessibility.php:594
 msgid "Miscellaneous"
 msgstr ""
 
-#: wp-accessibility.php:597
+#: wp-accessibility.php:596
 msgid "Add Site Language and text direction to HTML element"
 msgstr ""
 
-#: wp-accessibility.php:598
+#: wp-accessibility.php:597
 msgid "Remove target attribute from links"
 msgstr ""
 
-#: wp-accessibility.php:599
+#: wp-accessibility.php:598
 msgid ""
 "Force search error on empty search submission (theme must have search.php "
 "template)"
 msgstr ""
 
-#: wp-accessibility.php:600
+#: wp-accessibility.php:599
 msgid "Remove tabindex from focusable elements"
 msgstr ""
 
-#: wp-accessibility.php:601
+#: wp-accessibility.php:600
 msgid "Enable WordPress Admin stylesheet"
 msgstr ""
 
-#: wp-accessibility.php:602
+#: wp-accessibility.php:601
 msgid ""
 "Remove title attribute from images inserted into post content and featured "
 "images."
 msgstr ""
 
+#: wp-accessibility.php:602
+msgid "Add Accessibility toolbar with fontsize adjustment and contrast toggle"
+msgstr ""
+
 #: wp-accessibility.php:603
-msgid ""
-"Add Accessibility toolbar with fontsize adjustment, contrast toggle, and "
-"grayscale switch. (Grayscale not available for Firefox)"
+msgid "Include grayscale toggle with Accessibility toolbar"
 msgstr ""
 
 #: wp-accessibility.php:604
