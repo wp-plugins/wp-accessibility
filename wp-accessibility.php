@@ -3,7 +3,7 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/articles/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.2.1
+Version: 1.2.2
 Author: Joe Dolson
 Author URI: http://www.joedolson.com/
 
@@ -36,7 +36,7 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.2.1';
+	$wpa_version = '1.2.2';
 	if ( get_option('wpa_installed') != 'true' ) {
 		add_option('rta_from_nav_menu', 'on');
 		add_option('rta_from_page_lists', 'on');
@@ -794,16 +794,17 @@ function wpa_remove_title_attributes( $output ) {
 // The built-in Recent Posts widget hard-codes title attributes. This duplicate widget doesn't.
 class WP_Widget_Recent_Posts_No_Title_Attributes extends WP_Widget {
 
+/* CHECK FOR UPGRADE CONFLICTS
 	function WP_Widget_Recent_Posts_No_Title_Attributes() {
 		$widget_ops = array('classname' => 'widget_recent_entries', 'description' => __( "The most recent posts on your blog") );
 		$this->WP_Widget('recent-posts-no-title-attributes', __('WP A11y: Recent Posts','wp-accessibility'), $widget_ops);
 		$this->alt_option_name = 'widget_recent_entries';
-
-		add_action( 'save_post', array(&$this, 'flush_widget_cache') );
-		add_action( 'deleted_post', array(&$this, 'flush_widget_cache') );
-		add_action( 'switch_theme', array(&$this, 'flush_widget_cache') );
 	}
-
+*/
+function WP_Widget_Recent_Posts_No_Title_Attributes() {
+	parent::WP_Widget( false,$name=__('WP A11Y: Recent Posts','wp-accessibility') );
+}	
+	
 	function widget($args, $instance) {
 		$cache = wp_cache_get('widget_recent_posts', 'widget');
 
