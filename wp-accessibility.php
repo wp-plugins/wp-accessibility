@@ -3,7 +3,7 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/articles/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.2.2
+Version: 1.2.3
 Author: Joe Dolson
 Author URI: http://www.joedolson.com/
 
@@ -36,7 +36,7 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.2.2';
+	$wpa_version = '1.2.3';
 	if ( get_option('wpa_installed') != 'true' ) {
 		add_option('rta_from_nav_menu', 'on');
 		add_option('rta_from_page_lists', 'on');
@@ -73,8 +73,8 @@ function wpa_plugin_action($links, $file) {
 	return $links;
 }
 //Add Plugin Actions to WordPress
-add_filter('plugin_action_links', 'wpa_plugin_action', -10, 2);
-add_action( 'wp_enqueue_scripts', 'wpa_register_scripts');
+add_filter( 'plugin_action_links', 'wpa_plugin_action', -10, 2 );
+add_action( 'wp_enqueue_scripts', 'wpa_register_scripts' );
 add_action( 'admin_menu', 'wpa_javascript' );
 
 function wpa_javascript() { 
@@ -102,11 +102,13 @@ add_action('admin_head', 'wpa_admin_js');
 function wpa_write_js() {
 	if ( isset($_GET['page']) && $_GET['page']=='wp-accessibility/wp-accessibility.php' ) {
 	?>
-<script type="text/javascript">
-jQuery(document).ready(function($) {
+<script>
+//<![CDATA[
+(function( $ ) { 'use strict';
 	$('#fore').farbtastic('#color1');
 	$('#back').farbtastic('#color2');
-});
+}(jQuery));
+//]]>
 </script>
 	<?php
 	}
@@ -115,7 +117,7 @@ function wpa_register_scripts() {
 	// register jQuery script;
 	wp_register_script( 'skiplinks.webkit', plugins_url( 'wp-accessibility/js/skiplinks.webkit.js' ) );	
 	wp_register_script( 'ui-a11y.js', plugins_url( 'wp-accessibility/toolbar/js/a11y.js' ), array( 'jquery' ), '1.0', true );
-	wp_register_script( 'scrollTo', plugins_url( 'wp-accessibility/toolbar/js/jquery.scrollto.min.js' ), array( 'jquery' ), '1.0', true );
+	wp_register_script( 'scrollTo', plugins_url( 'wp-accessibility/toolbar/js/jquery.scrollto.min.js' ), array( 'jquery' ), '1.4.5', true );
 }
 
 if ( get_option( 'asl_enable') == 'on' ) {
@@ -161,8 +163,8 @@ function wpa_toolbar_js() {
 echo	
 	"
 <script type='text/javascript'>
-	jQuery.noConflict();
-	jQuery(document).ready(function($) {
+//<![CDATA[
+	(function( $ ) { 'use strict';
 		// Prepend our toolbar to the left side of the page, right under <body>
 		var insert_a11y_toolbar = '<!-- a11y toolbar -->';
 		insert_a11y_toolbar += '<div class=\"a11y-toolbar\">';
@@ -174,7 +176,8 @@ echo
 		insert_a11y_toolbar += '</div>';
 		insert_a11y_toolbar += '<!-- // a11y toolbar -->';
 		$(document).find('body').prepend(insert_a11y_toolbar);
-	});
+	}(jQuery));
+//]]>
 </script>";
 }
 
@@ -247,12 +250,14 @@ function wpa_jquery_asl() {
 	if ( $output || $lang ) { 
 		$script = "
 <script>
-	jQuery(document).ready( function($) {
+//<![CDATA[
+	(function( $ ) { 'use strict';
 		$skiplinks_js
 		$targets
 		$lang_js
 		$tabindex
-	});
+	}(jQuery));
+//]]>
 </script>";
 		echo $script;
 	}
@@ -455,7 +460,6 @@ if ( get_option('wpa_search') == 'on' ) {
 	add_filter('pre_get_posts','wpa_filter');
 }
 function wpa_filter($query) {
-	// Insert the specific post type you want to search
 	if ( isset($_GET['s']) && $_GET['s'] == '' ) { 
 		$query->query_vars['s'] = '&#32;';
 		$query->set( 'is_search', 1 );
@@ -791,16 +795,9 @@ function wpa_remove_title_attributes( $output ) {
 	return $output;
 }
 
-// The built-in Recent Posts widget hard-codes title attributes. This duplicate widget doesn't.
+// The built-in Recent Posts widget hard-codes title attributes. This widget doesn't.
 class WP_Widget_Recent_Posts_No_Title_Attributes extends WP_Widget {
 
-/* CHECK FOR UPGRADE CONFLICTS
-	function WP_Widget_Recent_Posts_No_Title_Attributes() {
-		$widget_ops = array('classname' => 'widget_recent_entries', 'description' => __( "The most recent posts on your blog") );
-		$this->WP_Widget('recent-posts-no-title-attributes', __('WP A11y: Recent Posts','wp-accessibility'), $widget_ops);
-		$this->alt_option_name = 'widget_recent_entries';
-	}
-*/
 function WP_Widget_Recent_Posts_No_Title_Attributes() {
 	parent::WP_Widget( false,$name=__('WP A11Y: Recent Posts','wp-accessibility') );
 }	
@@ -870,11 +867,8 @@ function WP_Widget_Recent_Posts_No_Title_Attributes() {
 <?php
 	}
 }
-function wpa_widgets_init() {
-	register_widget('WP_Widget_Recent_Posts_No_Title_Attributes');
-}
-add_action('init', 'wpa_widgets_init', 1);
 
+add_action('widgets_init', create_function('', 'return register_widget("WP_Widget_Recent_Posts_No_Title_Attributes");') );
 
 function wpa_get_support_form() {
 global $current_user, $wpa_version;
@@ -889,9 +883,6 @@ get_currentuserinfo();
 	$charset = get_bloginfo('charset');
 	// server
 	$php_version = phpversion();
-	
-	$curl_init = ( function_exists('curl_init') )?'yes':'no';
-	$curl_exec = ( function_exists('curl_exec') )?'yes':'no';
 	
 	// theme data
 	if ( function_exists( 'wp_get_theme' ) ) {
@@ -931,13 +922,12 @@ URL: $home_url
 Install: $wp_url
 Language: $language
 Charset: $charset
+Admin Email: $current_user->user_email
 
 ==Extra info:==
 PHP Version: $php_version
 Server Software: $_SERVER[SERVER_SOFTWARE]
 User Agent: $_SERVER[HTTP_USER_AGENT]
-cURL Init: $curl_init
-cURL Exec: $curl_exec
 
 ==Theme:==
 Name: $theme_name

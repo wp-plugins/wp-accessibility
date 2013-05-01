@@ -1,7 +1,7 @@
 === WP Accessibility ===
 Contributors: joedolson
 Donate link: http://www.joedolson.com/donate.php
-Tags: title, accessibility, accessible, navigation, wcag, a11y
+Tags: title, accessibility, accessible, navigation, wcag, a11y, section508, focus
 Requires at least: 3.4.2
 Tested up to: 3.5.1
 Stable tag: trunk
@@ -11,9 +11,9 @@ WP Accessibility provides fixes for common accessibility issues in your WordPres
 
 == Description ==
 
-This plug-in is for correcting a variety of common accessibility issues encountered in WordPress themes. While most accessibility issues can't be easily addressed using abstracted code, WP Accessibility can provide a number of accessibility features with a minimum mount of setup and expert knowledge.
+This plug-in helps correct a variety of common accessibility problems in WordPress themes. While most accessibility issues can't be addressed without directly changing your theme, WP Accessibility adds a number of helpful accessibility features with the minimum amount of setup or expert knowledge.
 
-All features can be disabled according to your theme's needs. All of the functions based on modifying stylesheets can be customized using your own custom styles by placing the appropriate stylesheet in your theme directory.
+All features can be disabled according to your theme's needs. For advanced users, all of the functions based on modifying stylesheets can be customized using your own custom styles by placing the appropriate stylesheet in your theme directory.
 
 At the moment, the plug-in can:
 
@@ -44,6 +44,13 @@ Translating my plug-ins is always appreciated. Visit <a href="http://translate.j
 2. Customise your settings on the Settings > WP Accessibility page.
 
 == Changelog ==
+
+= 1.2.3 =
+
+* Updated jQuery ScrollTo to version 1.4.5 to resolve JS conflict.
+* Updated method of accessing $ in jQuery.
+* Added CDATA blocks so WP Accessibility doesn't prevent validation as XML.
+* Added Italian translation, courtesy of Roberto Scano.
 
 = 1.2.2 =
 
