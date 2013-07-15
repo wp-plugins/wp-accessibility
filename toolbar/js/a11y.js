@@ -105,10 +105,10 @@ jQuery(document).ready(function($) {
 
 	// If there is a '#' in the URL (someone linking directly to a page with an anchor), go directly to that area and focus is
 	// Thanks to WebAIM.org for this idea
-	if (document.location.hash) {
+	if (document.location.hash && document.location.hash != '#' ) {
 		var anchorUponArrival = document.location.hash;
 		setTimeout(function() {
-			$(anchorUponArrival).Scrollto({ duration: 1500 });
+			$(anchorUponArrival).scrollTo({ duration: 1500 });
 			$(anchorUponArrival).focus();
 		}, 100);
 	}
@@ -117,7 +117,7 @@ jQuery(document).ready(function($) {
 	// Thanks to WebAIM.org for this idea
 	$('a[href^="#"]').click(function(event) {
 		var inPageAnchor = "#" + this.href.split('#')[1];
-		$(inPageAnchor).ScrollTo({ duration: 1000 });
+		$(inPageAnchor).scrollTo({ duration: 1000 });
 		setTimeout(function() {
 			$(inPageAnchor).focus();
 		}, 100);

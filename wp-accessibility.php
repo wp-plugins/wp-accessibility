@@ -3,7 +3,7 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/articles/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.2.3
+Version: 1.2.4
 Author: Joe Dolson
 Author URI: http://www.joedolson.com/
 
@@ -36,7 +36,7 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.2.3';
+	$wpa_version = '1.2.4';
 	if ( get_option('wpa_installed') != 'true' ) {
 		add_option('rta_from_nav_menu', 'on');
 		add_option('rta_from_page_lists', 'on');
@@ -160,6 +160,7 @@ function wpa_toolbar_js() {
 	$contrast = __('Toggle High Contrast','wp-accessibility');
 	$grayscale = __('Toggle Grayscale','wp-accessibility');
 	$fontsize = __('Toggle Font size','wp-accessibility');
+	$location = apply_filters( 'wpa_move_toolbar', 'body' );
 echo	
 	"
 <script type='text/javascript'>
@@ -175,7 +176,7 @@ echo
 		insert_a11y_toolbar += '</ul>';
 		insert_a11y_toolbar += '</div>';
 		insert_a11y_toolbar += '<!-- // a11y toolbar -->';
-		$(document).find('body').prepend(insert_a11y_toolbar);
+		$(document).find('$location').prepend(insert_a11y_toolbar);
 	}(jQuery));
 //]]>
 </script>";
@@ -263,12 +264,37 @@ function wpa_jquery_asl() {
 	}
 }
 
+// courtesy of Graham Armfield (modified)
+// http://www.coolfields.co.uk/2013/02/wordpress-permanently-visible-log-out-link-plugin-version-0-1/
+add_action( 'admin_bar_menu', 'wpa_logout_item', 11 );
+function wpa_logout_item($admin_bar){
+	$args = array(
+				'id'    => 'wpa-logout',
+				'title' => 'Log Out',
+				'href'  => wp_logout_url(),
+			);
+    $admin_bar->add_node( $args );
+}
+
 function wpa_stylesheet() {
 	// Respects SSL, Style.css is relative to the current file
 	wp_register_style( 'wpa-style', plugins_url('wpa-style.css', __FILE__) );
 	wp_enqueue_style( 'wpa-style' );
 	wp_register_style( 'ui-a11y.css', plugins_url( 'toolbar/css/a11y.css', __FILE__) );
 	wp_enqueue_style( 'ui-a11y.css' );
+	if ( current_user_can( 'edit_files' ) && get_option('wpa_diagnostics') == 'on' ) {
+		wp_register_style( 'diagnostic', plugins_url('diagnostic.css', __FILE__) );
+		wp_register_style( 'diagnostic-head', plugins_url('diagnostic-head.css', __FILE__) );
+		wp_enqueue_style( 'diagnostic' );
+		wp_enqueue_style( 'diagnostic-head' );		
+	}
+}
+add_filter( 'mce_css', 'wp_diagnostic_css' );
+function wp_diagnostic_css( $mce_css ) {
+	if (  get_option('wpa_diagnostics') == 'on' ) {
+		$mce_css .= ', ' . plugins_url( 'diagnostic.css', __FILE__ );
+		return $mce_css;
+	}
 }
 
 function wpa_luminosity($r,$r2,$g,$g2,$b,$b2) {
@@ -324,7 +350,7 @@ function wpa_hex2rgb($color){
 
 function wpa_contrast() {
 	if ( !empty($_POST) ) {
-	$nonce=$_REQUEST['_wpnonce'];	if (! wp_verify_nonce($nonce,'wpa-nonce') ) die("Security check failed");  
+	$nonce=$_REQUEST['_wpnonce'];	if (!wp_verify_nonce($nonce,'wpa-nonce') ) die("Security check failed");  
 		if (isset($_POST['color']) && $_POST['color'] != "") {
 			$fore_color = $_POST['color'];
 			if ($fore_color[0] == "#") {
@@ -437,6 +463,7 @@ function wpa_update_settings() {
 			$wpa_toolbar = ( isset( $_POST['wpa_toolbar'] ) )?'on':'';
 			$wpa_toolbar_gs = ( isset( $_POST['wpa_toolbar_gs'] ) )?'on':'';
 			$wpa_admin_css = ( isset( $_POST['wpa_admin_css'] ) )?'on':'';
+			$wpa_diagnostics = ( isset( $_POST['wpa_diagnostics'] ) )?'on':'';
 			update_option('wpa_lang', $wpa_lang );
 			update_option('wpa_target', $wpa_target );
 			update_option('wpa_search', $wpa_search );
@@ -449,6 +476,7 @@ function wpa_update_settings() {
 			update_option('wpa_focus_color', $wpa_focus_color );
 			update_option('wpa_continue', $wpa_continue );
 			update_option('wpa_admin_css', $wpa_admin_css );
+			update_option('wpa_diagnostics', $wpa_diagnostics );
 			$message = __("Miscellaneous Accessibility Settings Updated",'wp-accessibility');
 			return "<div class='updated'><p>".$message."</p></div>";
 		}
@@ -604,7 +632,8 @@ function wpa_admin_menu() { ?>
 						<li><input type="checkbox" id="wpa_admin_css" name="wpa_admin_css" <?php if ( get_option('wpa_admin_css') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_admin_css"><?php _e('Enable WordPress Admin stylesheet','wp-accessibility'); ?></label></li>
 						<li><input type="checkbox" id="wpa_image_titles" name="wpa_image_titles" <?php if ( get_option('wpa_image_titles') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_image_titles"><?php _e('Remove title attribute from images inserted into post content and featured images.','wp-accessibility'); ?></label></li>
 						<li><input type="checkbox" id="wpa_toolbar" name="wpa_toolbar" <?php if ( get_option('wpa_toolbar') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_toolbar"><?php _e('Add Accessibility toolbar with fontsize adjustment and contrast toggle','wp-accessibility'); ?></label></li>		
-						<li><input type="checkbox" id="wpa_toolbar_gs" name="wpa_toolbar_gs" <?php if ( get_option('wpa_toolbar_gs') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_toolbar_gs"><?php _e('Include grayscale toggle with Accessibility toolbar','wp-accessibility'); ?></label></li>		
+						<li><input type="checkbox" id="wpa_toolbar_gs" name="wpa_toolbar_gs" <?php if ( get_option('wpa_toolbar_gs') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_toolbar_gs"><?php _e('Include grayscale toggle with Accessibility toolbar','wp-accessibility'); ?></label></li>
+						<li><input type="checkbox" id="wpa_diagnostics" name="wpa_diagnostics" <?php if ( get_option('wpa_toolbar_gs') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_diagnostics"><?php _e('Enable diagnostic CSS','wp-accessibility'); ?></label></li>								
 						<li><input type="checkbox" id="wpa_more" name="wpa_more" <?php if ( get_option('wpa_more') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_more"><?php _e('Add post title to "more" links.','wp-accessibility'); ?></label>
 							<label for="wpa_continue"><?php _e('Continue reading text','wp-accessibility'); ?></label> <input type="text" id="wpa_continue" name="wpa_continue" value="<?php echo esc_attr(get_option('wpa_continue') ); ?>" /></li>
 						<li><input type="checkbox" id="wpa_focus" name="wpa_focus" <?php if ( get_option('wpa_focus') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_focus"><?php _e('Add outline to elements on keyboard focus','wp-accessibility'); ?></label> <label for="wpa_focus_color"><?php _e('Outline color (hexadecimal, optional)','wp-accessibility' ); ?></label><input type="text" id="wpa_focus_color" name="wpa_focus_color" value="#<?php echo esc_attr(get_option('wpa_focus_color') ); ?>" /></li>					
@@ -940,7 +969,7 @@ $plugins_string
 ";
 	if ( isset($_POST['wpt_support']) ) {
 		$nonce=$_REQUEST['_wpnonce'];
-		if (! wp_verify_nonce($nonce,'wp-accessibility-nonce') ) die("Security check failed");	
+		if (! wp_verify_nonce($nonce,'wpa-nonce') ) die("Security check failed");	
 		$request = ( !empty($_POST['support_request']) )?stripslashes($_POST['support_request']):false;
 		$has_donated = ( $_POST['has_donated'] == 'on')?"Donor":"No donation";
 		$has_read_faq = ( $_POST['has_read_faq'] == 'on')?"Read FAQ":false;
@@ -965,7 +994,7 @@ $plugins_string
 
 	echo "
 	<form method='post' action='$admin_url'>
-		<div><input type='hidden' name='_wpnonce' value='".wp_create_nonce('wp-accessibility-nonce')."' /></div>
+		<div><input type='hidden' name='_wpnonce' value='".wp_create_nonce('wpa-nonce')."' /></div>
 		<div>";
 		echo "
 		<p>".
