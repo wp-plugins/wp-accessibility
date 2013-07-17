@@ -45,6 +45,10 @@ Translating my plug-ins is always appreciated. Visit <a href="http://translate.j
 
 == Changelog ==
 
+= 1.2.4.1=
+
+* Minor settings bug.
+
 = 1.2.4 =
 
 * Added diagnostic.css (beta) for admin users on front end and in post editor.
@@ -123,4 +127,4 @@ Even if WP Accessibility is running correctly, not all accessibility testing too
 
 == Upgrade Notice ==
 
-* Bug fix for custom skiplink target; Added focus outline option; Added color contrast tool.
+* 1.2.4: Added diagnostic CSS, visible logout link.
