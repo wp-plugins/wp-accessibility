@@ -3,8 +3,8 @@ Contributors: joedolson
 Donate link: http://www.joedolson.com/donate.php
 Tags: title, accessibility, accessible, navigation, wcag, a11y, section508, focus
 Requires at least: 3.4.2
-Tested up to: 3.5.1
-Stable tag: trunk
+Tested up to: 3.6.0
+Stable tag: 1.2.5
 License: GPLv2 or later
 
 WP Accessibility provides fixes for common accessibility issues in your WordPress site.
@@ -36,6 +36,10 @@ The plug-in is intended to make up for some deficiencies commonly found in theme
 
 Translating my plug-ins is always appreciated. Visit <a href="http://translate.joedolson.com">my translations site</a> to start getting your language into shape!
 
+Available languages (in order of completeness):
+French, Spanish, Italian, German, Polish, Finnish
+
+Visit the [WP Accessibility translations site](http://translate.joedolson.com/projects/wp-accessibility/) to check the progress of a translation.
 
 == Installation ==
 
@@ -45,7 +49,14 @@ Translating my plug-ins is always appreciated. Visit <a href="http://translate.j
 
 == Changelog ==
 
-= 1.2.4.1=
+= 1.2.5 =
+
+* Added Spanish translation.
+* Added incomplete Finnish translation.
+* Updated French translation.
+* Bug fix: WP Accessibility disabled ability to use theme styles in TinyMCE editor.
+
+= 1.2.4.1 =
 
 * Minor settings bug.
 

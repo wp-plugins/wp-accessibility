@@ -3,7 +3,7 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/articles/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.2.4.1
+Version: 1.2.5
 Author: Joe Dolson
 Author URI: http://www.joedolson.com/
 
@@ -36,7 +36,7 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.2.4.1';
+	$wpa_version = '1.2.5';
 	if ( get_option('wpa_installed') != 'true' ) {
 		add_option('rta_from_nav_menu', 'on');
 		add_option('rta_from_page_lists', 'on');
@@ -293,8 +293,8 @@ add_filter( 'mce_css', 'wp_diagnostic_css' );
 function wp_diagnostic_css( $mce_css ) {
 	if (  get_option('wpa_diagnostics') == 'on' ) {
 		$mce_css .= ', ' . plugins_url( 'diagnostic.css', __FILE__ );
-		return $mce_css;
 	}
+	return $mce_css;
 }
 
 function wpa_luminosity($r,$r2,$g,$g2,$b,$b2) {
@@ -565,7 +565,7 @@ function wpa_admin_menu() { ?>
 		<div class="ui-sortable meta-box-sortables">
 			<div class="postbox">
 				<h3><?php _e('Remove Title Attributes','wp-accessibility'); ?></h3>
-				<div class="inside">		
+				<div class="inside">
 				<form method="post" action="<?php echo admin_url('options-general.php?page=wp-accessibility/wp-accessibility.php'); ?>">
 				<fieldset>
 					<legend><?php _e('Remove title attributes from:','wp-accessibility'); ?></legend>
@@ -874,9 +874,9 @@ function WP_Widget_Recent_Posts_No_Title_Attributes() {
 		$this->flush_widget_cache();
 
 		$alloptions = wp_cache_get( 'alloptions', 'options' );
-		if ( isset($alloptions['widget_recent_entries']) )
+		if ( isset($alloptions['widget_recent_entries']) ) {
 			delete_option('widget_recent_entries');
-
+		}
 		return $instance;
 	}
 

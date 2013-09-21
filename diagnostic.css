@@ -30,8 +30,9 @@ u:hover:after { content: " <u> is a deprecated HTML element"; }
 
 /* Deprecated Attributes - cannot be overridden by user styles */
 *[background], *[bgcolor], *[clear], *[color], *[compact], *[noshade], *[nowrap], *[size], *[start], *[bottommargin], *[leftmargin], *[rightmargin], *[topmargin], *[marginheight], *[marginwidth], *[alink], *[link], *[text], *[vlink], *[align], *[valign], *[hspace], *[vspace], *[height], *[width], ul[type], ol[type], li[type] {
-    outline: 2px solid red !important;
+    outline: 2px solid red;
 }
+img[height], img[width] { outline: none; }
 
 *[background]:hover:after { content: " background is a deprecated HTML attribute"; }
 *[bgcolor]:hover:after { content: " bgcolor is a deprecated HTML attribute"; }
