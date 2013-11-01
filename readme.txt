@@ -3,7 +3,7 @@ Contributors: joedolson
 Donate link: http://www.joedolson.com/donate.php
 Tags: title, accessibility, accessible, navigation, wcag, a11y, section508, focus
 Requires at least: 3.4.2
-Tested up to: 3.7.0
+Tested up to: 3.7.1
 Stable tag: 1.2.5
 License: GPLv2 or later
 
@@ -15,24 +15,32 @@ This plug-in helps correct a variety of common accessibility problems in WordPre
 
 All features can be disabled according to your theme's needs. For advanced users, all of the functions based on modifying stylesheets can be customized using your own custom styles by placing the appropriate stylesheet in your theme directory.
 
-At the moment, the plug-in can:
+Accessibility Features provided by WP Accessibility:
 
-* Remove redundant title attributes from page lists, category lists, and archive menus. 
 * Enable skip links with WebKit support by enqueuing JavaScript support for moving keyboard focus.
 * Add skip links with user-defined targets. (Customizable targets and appearance.)
 * Add language and text direction attributes to your HTML attribute
+* Add an outline to the keyboard focus state for focusable elements. 
+* Add a toolbar toggling between high contrast, large print, and desaturated (grayscale) views of your theme.
+
+Accessibility Issues fixed by WP Accessibility: 
+
 * Remove the target attribute from links.
 * Force a search page error when a search is made with an empty text string. (If your theme has a search.php template.)
 * Remove tabindex from elements that are focusable.
 * Strip title attributes from images inserted into content. 
+* Remove redundant title attributes from page lists, category lists, and archive menus. 
 * Add post titles to standard "read more" links.
-* Add an outline to the keyboard focus state for focusable elements. 
-* Add a toolbar toggling between high contrast, large print, and desaturated (grayscale) views of your theme.
-* Fix certain accessibility issues in the WordPress admin styles
-* Show the color contrast between two provided hexadecimal color values.
-* Read more about <a href="http://make.wordpress.org/accessibility/wp-accessibility-plugin/">the accessibility problems corrected</a>
+* Fix some accessibility issues in the WordPress admin styles
 
-The plug-in is intended to make up for some deficiencies commonly found in themes. It can't correct every problem (by a long shot), but can provide some assistance.
+Accessibility Tools built into WP Accessibility: 
+
+* Show the color contrast between two provided hexadecimal color values.
+* Enable diagnostic CSS to show CSS-detectable problems in visual editor or on front-end of site. 
+
+Learn more! <a href="http://make.wordpress.org/accessibility/wp-accessibility-plugin/">Read about the accessibility issues corrected</a> by WP Accessibility!
+
+The plug-in is intended to help with deficiencies commonly found in themes and to solve some issues in WordPress core. It can't correct every problem (by a long shot), but provides tools to fix some issues, supplement the accessibility of your site, or identify problems.
 
 Translating my plug-ins is always appreciated. Visit <a href="http://translate.joedolson.com">my translations site</a> to start getting your language into shape!
 
