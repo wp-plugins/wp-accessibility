@@ -15,7 +15,6 @@ body:before { content: "Currently viewing with diagnostic CSS enabled."; display
 	background-color: lightyellow !important;
 }
 
-
 /*
 	title element: not empty, unique and in head
 */

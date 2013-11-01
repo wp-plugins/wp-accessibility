@@ -3,7 +3,7 @@ Contributors: joedolson
 Donate link: http://www.joedolson.com/donate.php
 Tags: title, accessibility, accessible, navigation, wcag, a11y, section508, focus
 Requires at least: 3.4.2
-Tested up to: 3.6.0
+Tested up to: 3.7.0
 Stable tag: 1.2.5
 License: GPLv2 or later
 
@@ -48,6 +48,13 @@ Visit the [WP Accessibility translations site](http://translate.joedolson.com/pr
 2. Customise your settings on the Settings > WP Accessibility page.
 
 == Changelog ==
+
+= 1.2.6 =
+
+* Truly hides grayscale option, not dependent on CSS.
+* Eliminates in-page anchor focusing, due to conflicts with plug-ins that attach scripts to links with hashes.
+* Remove row action visibility from default admin stylesheet, due to 3.7 changes making those links keyboard accessible.
+* Added row actions always visible option.
 
 = 1.2.5 =
 

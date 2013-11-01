@@ -3,7 +3,7 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/articles/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.2.5
+Version: 1.2.6
 Author: Joe Dolson
 Author URI: http://www.joedolson.com/
 
@@ -36,7 +36,7 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.2.5';
+	$wpa_version = '1.2.6';
 	if ( get_option('wpa_installed') != 'true' ) {
 		add_option('rta_from_nav_menu', 'on');
 		add_option('rta_from_page_lists', 'on');
@@ -93,6 +93,15 @@ function wpa_admin_stylesheet() {
 		wp_register_style( 'wp-a11y-css', $file );
 		wp_enqueue_style( 'wp-a11y-css' );
 	}
+	if ( get_option( 'wpa_row_actions' ) == 'on' ) {
+		if ( file_exists( get_stylesheet_directory() . '/wp-admin-row-actions.css' ) ) {
+			$file = get_stylesheet_directory_uri() . '/wp-admin-row-actions.css';
+		} else {
+			$file = plugins_url('wp-admin-row-actions.css', __FILE__);
+		}
+		wp_register_style( 'wp-row-actions', $file );
+		wp_enqueue_style( 'wp-row-actions' );	
+	}	
 }
 function wpa_admin_js() {} // just a placeholder
 
@@ -170,8 +179,12 @@ echo
 		var insert_a11y_toolbar = '<!-- a11y toolbar -->';
 		insert_a11y_toolbar += '<div class=\"a11y-toolbar\">';
 		insert_a11y_toolbar += '<ul>';
-		insert_a11y_toolbar += '<li><a href=\"#\" class=\"a11y-toggle-contrast toggle-contrast\" id=\"is_normal_contrast\" title=\"$contrast\"><span class=\"offscreen\">$contrast</span><i class=\"icon icon-adjust\"></i></a></li>';
-		insert_a11y_toolbar += '<li><a href=\"#\" class=\"a11y-toggle-grayscale toggle-grayscale\" id=\"is_normal_color\" title=\"$grayscale\"><span class=\"offscreen\">$grayscale</span><i class=\"icon icon-tint\"></i></a></li>';
+		insert_a11y_toolbar += '<li><a href=\"#\" class=\"a11y-toggle-contrast toggle-contrast\" id=\"is_normal_contrast\" title=\"$contrast\"><span class=\"offscreen\">$contrast</span><i class=\"icon icon-adjust\"></i></a></li>';";
+		$enable_grayscale = ( get_option('wpa_toolbar_gs') == 'on' )?true:false;
+		if ( get_option( 'wpa_toolbar' ) == 'on' && $enable_grayscale ) {
+			echo "insert_a11y_toolbar += '<li><a href=\"#\" class=\"a11y-toggle-grayscale toggle-grayscale\" id=\"is_normal_color\" title=\"$grayscale\"><span class=\"offscreen\">$grayscale</span><i class=\"icon icon-tint\"></i></a></li>';";
+		}
+echo "	
 		insert_a11y_toolbar += '<li><a href=\"#\" class=\"a11y-toggle-fontsize toggle-fontsize\" id=\"is_normal_fontsize\" title=\"$fontsize\"><span class=\"offscreen\">$fontsize</span><i class=\"icon icon-font\"></i></a></li>';
 		insert_a11y_toolbar += '</ul>';
 		insert_a11y_toolbar += '</div>';
@@ -198,10 +211,6 @@ function wpa_css() {
 		#skiplinks a, $invis #skiplinks a:visited { $passive }
 		#skiplinks a:active, $vis #skiplinks a:focus { $focus  }
 		";
-	}
-	$enable_grayscale = ( get_option('wpa_toolbar_gs') == 'on' )?true:false;
-	if ( get_option( 'wpa_toolbar' ) == 'on' && !$enable_grayscale ) {
-		$styles .= ".a11y-toolbar ul li:nth-child(2) { display: none; }";
 	}
 	if ( get_option( 'wpa_focus' ) == 'on' ) {
 		$color = ( get_option('wpa_focus_color') != '' )?" #".get_option('wpa_focus_color'):'';
@@ -463,6 +472,7 @@ function wpa_update_settings() {
 			$wpa_toolbar = ( isset( $_POST['wpa_toolbar'] ) )?'on':'';
 			$wpa_toolbar_gs = ( isset( $_POST['wpa_toolbar_gs'] ) )?'on':'';
 			$wpa_admin_css = ( isset( $_POST['wpa_admin_css'] ) )?'on':'';
+			$wpa_row_actions = ( isset( $_POST['wpa_row_actions'] ) ) ? 'on' : '';
 			$wpa_diagnostics = ( isset( $_POST['wpa_diagnostics'] ) )?'on':'';
 			update_option('wpa_lang', $wpa_lang );
 			update_option('wpa_target', $wpa_target );
@@ -476,6 +486,7 @@ function wpa_update_settings() {
 			update_option('wpa_focus_color', $wpa_focus_color );
 			update_option('wpa_continue', $wpa_continue );
 			update_option('wpa_admin_css', $wpa_admin_css );
+			update_option( 'wpa_row_actions', $wpa_row_actions );
 			update_option('wpa_diagnostics', $wpa_diagnostics );
 			$message = __("Miscellaneous Accessibility Settings Updated",'wp-accessibility');
 			return "<div class='updated'><p>".$message."</p></div>";
@@ -630,6 +641,7 @@ function wpa_admin_menu() { ?>
 						<li><input type="checkbox" id="wpa_search" name="wpa_search" <?php if ( get_option('wpa_search') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_search"><?php _e('Force search error on empty search submission (theme must have search.php template)','wp-accessibility'); ?></label></li>
 						<li><input type="checkbox" id="wpa_tabindex" name="wpa_tabindex" <?php if ( get_option('wpa_tabindex') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_tabindex"><?php _e('Remove tabindex from focusable elements','wp-accessibility'); ?></label></li>
 						<li><input type="checkbox" id="wpa_admin_css" name="wpa_admin_css" <?php if ( get_option('wpa_admin_css') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_admin_css"><?php _e('Enable WordPress Admin stylesheet','wp-accessibility'); ?></label></li>
+						<li><input type="checkbox" id="wpa_row_actions" name="wpa_row_actions" <?php if ( get_option('wpa_row_actions') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_row_actions"><?php _e('Make row actions always visible','wp-accessibility'); ?></label></li>						
 						<li><input type="checkbox" id="wpa_image_titles" name="wpa_image_titles" <?php if ( get_option('wpa_image_titles') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_image_titles"><?php _e('Remove title attribute from images inserted into post content and featured images.','wp-accessibility'); ?></label></li>
 						<li><input type="checkbox" id="wpa_toolbar" name="wpa_toolbar" <?php if ( get_option('wpa_toolbar') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_toolbar"><?php _e('Add Accessibility toolbar with fontsize adjustment and contrast toggle','wp-accessibility'); ?></label></li>		
 						<li><input type="checkbox" id="wpa_toolbar_gs" name="wpa_toolbar_gs" <?php if ( get_option('wpa_toolbar_gs') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_toolbar_gs"><?php _e('Include grayscale toggle with Accessibility toolbar','wp-accessibility'); ?></label></li>
@@ -729,7 +741,7 @@ if ( $l_contrast ) {
 					</p>
 					<p><?php _e("If you've found WP Accessibility useful, then please consider <a href='http://wordpress.org/extend/plugins/wp-accessibility/'>rating it five stars</a>, <a href='http://www.joedolson.com/donate.php'>making a donation</a>, or <a href='http://translate.joedolson.com/projects/wp-accessibility'>helping with translation</a>.",'wp-accessibility'); ?></p>
 							<div>
-					<p><?php _e('<a href="http://www.joedolson.com/donate.php">Make a donation today!</a> Every donation counts - donate $2, $10, or $100 and help me keep this plug-in running!','wp-to-twitter'); ?></p>
+					<p><?php _e('<a href="http://www.joedolson.com/donate.php">Make a donation today!</a> Every donation counts - donate $5, $20, or $100 and help me keep this plug-in running!','wp-to-twitter'); ?></p>
 					<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 						<div>
 						<input type="hidden" name="cmd" value="_s-xclick" />
