@@ -3,11 +3,11 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/articles/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.2.6
+Version: 1.2.7
 Author: Joe Dolson
 Author URI: http://www.joedolson.com/
 
-    Copyright 2012 Joe Dolson (joe@joedolson.com)
+    Copyright 2012-2013 Joe Dolson (joe@joedolson.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.2.6';
+	$wpa_version = '1.2.7';
 	if ( get_option('wpa_installed') != 'true' ) {
 		add_option('rta_from_nav_menu', 'on');
 		add_option('rta_from_page_lists', 'on');
@@ -581,14 +581,14 @@ function wpa_admin_menu() { ?>
 				<fieldset>
 					<legend><?php _e('Remove title attributes from:','wp-accessibility'); ?></legend>
 					<ul>
-						<li><input type="checkbox" id="rta_from_nav_menu" name="rta_from_nav_menu" <?php if ( get_option('rta_from_nav_menu') == "on") { echo 'checked="checked" '; } ?>/> <label for="rta_from_nav_menu"><?php _e('Nav menus','wp-accessibility'); ?></label></li>
-						<li><input type="checkbox" id="rta_from_page_lists" name="rta_from_page_lists" <?php if ( get_option('rta_from_page_lists') == "on") { echo 'checked="checked" '; } ?>/> <label for="rta_from_page_lists"><?php _e('Page lists','wp-accessibility'); ?></label></li>
+						<li><input <?php echo ( version_compare( get_bloginfo( 'version'), '3.8', '>=' ) ) ? 'disabled="disabled"' : '' ; ?> type="checkbox" id="rta_from_nav_menu" name="rta_from_nav_menu" <?php if ( get_option('rta_from_nav_menu') == "on") { echo 'checked="checked" '; } ?>/> <label for="rta_from_nav_menu"><?php _e('Nav menus','wp-accessibility'); ?> (<?php echo ( version_compare( get_bloginfo( 'version'), '3.8', '>=' ) ) ? __('Obsolete since WordPress 3.8','wp-accessibility') : '' ; ?>)</label></li>
+						<li><input <?php echo ( version_compare( get_bloginfo( 'version'), '3.8', '>=' ) ) ? 'disabled="disabled"' : '' ; ?> type="checkbox" id="rta_from_page_lists" name="rta_from_page_lists" <?php if ( get_option('rta_from_page_lists') == "on") { echo 'checked="checked" '; } ?>/> <label for="rta_from_page_lists"><?php _e('Page lists','wp-accessibility'); ?> (<?php echo ( version_compare( get_bloginfo( 'version'), '3.8', '>=' ) ) ? __('Obsolete since WordPress 3.8','wp-accessibility') : '' ; ?>)</label></li>
 						<li><input type="checkbox" id="rta_from_category_lists" name="rta_from_category_lists" <?php if ( get_option('rta_from_category_lists') == "on") { echo 'checked="checked" '; } ?>/> <label for="rta_from_category_lists"><?php _e('Category lists','wp-accessibility'); ?></label></li>
 						<li><input type="checkbox" id="rta_from_archive_links" name="rta_from_archive_links" <?php if ( get_option('rta_from_archive_links') == "on") { echo 'checked="checked" '; } ?>/> <label for="rta_from_archive_links"><?php _e('Archive links','wp-accessibility'); ?></label></li>
 						<li><input type="checkbox" id="rta_from_tag_clouds" name="rta_from_tag_clouds" <?php if ( get_option('rta_from_tag_clouds') == "on") { echo 'checked="checked" '; } ?>/> <label for="rta_from_tag_clouds"><?php _e('Tag clouds','wp-accessibility'); ?></label></li>
-						<li><input type="checkbox" id="rta_from_category_links" name="rta_from_category_links" <?php if ( get_option('rta_from_category_links') == "on") { echo 'checked="checked" '; } ?>/> <label for="rta_from_category_links"><?php _e('Category links','wp-accessibility'); ?></label></li>
-						<li><input type="checkbox" id="rta_from_post_edit_links" name="rta_from_post_edit_links" <?php if ( get_option('rta_from_post_edit_links') == "on") { echo 'checked="checked" '; } ?>/> <label for="rta_from_post_edit_links"><?php _e('Post edit links','wp-accessibility'); ?></label></li>
-						<li><input type="checkbox" id="rta_from_edit_comment_links" name="rta_from_edit_comment_links" <?php if ( get_option('rta_from_edit_comment_links') == "on") { echo 'checked="checked" '; } ?>/> <label for="rta_from_edit_comment_links"><?php _e('Edit comment links','wp-accessibility'); ?></label></li>
+						<li><input <?php echo ( version_compare( get_bloginfo( 'version'), '3.8', '>=' ) ) ? 'disabled="disabled"' : '' ; ?> type="checkbox" id="rta_from_category_links" name="rta_from_category_links" <?php if ( get_option('rta_from_category_links') == "on") { echo 'checked="checked" '; } ?>/> <label for="rta_from_category_links"><?php _e('Category links','wp-accessibility'); ?> (<?php echo ( version_compare( get_bloginfo( 'version'), '3.8', '>=' ) ) ? __('Obsolete since WordPress 3.8','wp-accessibility') : '' ; ?>)</label></li>
+						<li><input <?php echo ( version_compare( get_bloginfo( 'version'), '3.8', '>=' ) ) ? 'disabled="disabled"' : '' ; ?> type="checkbox" id="rta_from_post_edit_links" name="rta_from_post_edit_links" <?php if ( get_option('rta_from_post_edit_links') == "on") { echo 'checked="checked" '; } ?>/> <label for="rta_from_post_edit_links"><?php _e('Post edit links','wp-accessibility'); ?> (<?php echo ( version_compare( get_bloginfo( 'version'), '3.8', '>=' ) ) ? __('Obsolete since WordPress 3.8','wp-accessibility') : '' ; ?>)</label></li>
+						<li><input <?php echo ( version_compare( get_bloginfo( 'version'), '3.8', '>=' ) ) ? 'disabled="disabled"' : '' ; ?> type="checkbox" id="rta_from_edit_comment_links" name="rta_from_edit_comment_links" <?php if ( get_option('rta_from_edit_comment_links') == "on") { echo 'checked="checked" '; } ?>/> <label for="rta_from_edit_comment_links"><?php _e('Edit comment links','wp-accessibility'); ?> (<?php echo ( version_compare( get_bloginfo( 'version'), '3.8', '>=' ) ) ? __('Obsolete since WordPress 3.8','wp-accessibility') : '' ; ?>)</label></li>
 					</ul>
 				</fieldset>
 					<p>
@@ -806,10 +806,11 @@ if ( $l_contrast ) {
 </div><?php
 }
 
-if (get_option('rta_from_nav_menu') == 'on') {
-	add_filter('wp_nav_menu', 'wpa_remove_title_attributes' );
+// Obsolete with 3.8: (nav menus, page lists, edit post links, edit comment links, category links)
+if ( get_option('rta_from_nav_menu') == 'on' && version_compare( get_bloginfo( 'version'), '3.8.0', '<' ) ) {
+	add_filter('wp_nav_menu', 'wpa_remove_title_attributes' ); 
 }
-if (get_option('rta_from_page_lists') == 'on') {
+if (get_option('rta_from_page_lists') == 'on' && version_compare( get_bloginfo( 'version'), '3.8.0', '<' ) ) {
 	add_filter('wp_list_pages', 'wpa_remove_title_attributes');
 }
 if (get_option('rta_from_category_lists') == 'on') {
@@ -821,13 +822,13 @@ if (get_option('rta_from_archive_links') == 'on') {
 if (get_option('rta_from_tag_clouds') == 'on') {
 	add_filter('wp_tag_cloud', 'wpa_remove_title_attributes');
 }
-if (get_option('rta_from_category_links') == 'on') {
+if (get_option('rta_from_category_links' && version_compare( get_bloginfo( 'version'), '3.8.0', '<' ) ) == 'on') {
 	add_filter('the_category', 'wpa_remove_title_attributes');
 }
-if (get_option('rta_from_post_edit_links') == 'on') {
+if (get_option('rta_from_post_edit_links' && version_compare( get_bloginfo( 'version'), '3.8.0', '<' ) ) == 'on') {
 	add_filter('edit_post_link', 'wpa_remove_title_attributes');
 }
-if ( get_option('rta_from_edit_comment_links') == 'on') {
+if ( get_option('rta_from_edit_comment_links' && version_compare( get_bloginfo( 'version'), '3.8.0', '<' ) ) == 'on') {
 	add_filter('edit_comment_link', 'wpa_remove_title_attributes');
 }
 
@@ -1023,7 +1024,7 @@ $plugins_string
         <input type='checkbox' name='has_donated' id='has_donated' value='on' /> <label for='has_donated'>".sprintf(__('I have <a href="%1$s">made a donation to help support this plug-in</a>','wp-accessibility'),'http://www.joedolson.com/donate.php')."</label>
         </p>
         <p>
-        <label for='support_request'>".__('Support Request:','wp-accessibility')."</label><br /><textarea name='support_request' id='support_request' cols='80' rows='10'>".stripslashes($request)."</textarea>
+        <label for='support_request'>".__('Support Request:','wp-accessibility')."</label><br /><textarea name='support_request' required aria-required='true' id='support_request' cols='80' rows='10'>".stripslashes($request)."</textarea>
 		</p>
 		<p>
 		<input type='submit' value='".__('Send Support Request','wp-accessibility')."' name='wpt_support' class='button-primary' />

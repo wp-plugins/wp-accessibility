@@ -13,7 +13,7 @@ function createCookie(name, value, days) {
 	var expires = "";
 	document.cookie = name + "=" + value + expires + "; path=/";
 }
-	
+
 function readCookie(name) {
 	var nameEQ = name + "=";
 	var ca = document.cookie.split(';');

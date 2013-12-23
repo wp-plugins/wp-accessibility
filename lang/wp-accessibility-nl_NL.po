@@ -1,0 +1,374 @@
+# Translation of WP Accessibility in Dutch
+# This file is distributed under the same license as the WP Accessibility package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2013-12-23 17:56:54+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/0.1\n"
+"Project-Id-Version: WP Accessibility\n"
+
+#: wp-accessibility.php:602
+msgid "Add Accessibility toolbar with fontsize adjustment and contrast toggle"
+msgstr "Voeg de accessibility toolbar toe met keuzes voor fontgrootte en contrast"
+
+#: wp-accessibility.php:603
+msgid "Include grayscale toggle with Accessibility toolbar"
+msgstr "Voeg keuze voor grijstinten toe aan de Accessibility toolbar"
+
+#: wp-accessibility.php:158
+msgid "Toggle High Contrast"
+msgstr "Keuze voor hoog contrast"
+
+#: wp-accessibility.php:159
+msgid "Toggle Grayscale"
+msgstr "Keuze grijstinten"
+
+#: wp-accessibility.php:160
+msgid "Toggle Font size"
+msgstr "Kies fontgrootte"
+
+#: wp-accessibility.php:600
+msgid "Enable WordPress Admin stylesheet"
+msgstr "Schakel het WordPress Admin stylesheet in"
+
+#: wp-accessibility.php:747
+msgid "Accessibility Toolbar Notes"
+msgstr "Accessibility Toolbar opmerkingen"
+
+#: wp-accessibility.php:750
+msgid "It is almost impossible for the Accessibility Toolbar to guarantee a good result for large text or high contrast modes. You can author your own high-contrast styles by placing a stylesheet called <code>a11y-contrast.css</code> in your Theme's stylesheet directory."
+msgstr "Het is bijna onmogelijk voor de Accessibility Toolbar om een goede weergave te garanderen voor grote tekstweergave of voor een hoog contrast. Je kunt uw eigen CSS stijl toevoegen door een stylesheet met de naam <code>a11y-contrast.css</code> in je thema's stylesheet directory te plaatsen."
+
+#: wp-accessibility.php:753
+msgid "You can define custom styles for the large print view by defining them under the body class <code>.fontsize</code> in your theme stylesheet."
+msgstr "U kunt uw eigen CSS stijl instellen voor grote letters door deze te definiëren in het body class <code>.fontsize</code> in het stylesheet van uw thema."
+
+#: wp-accessibility.php:71
+msgid "Accessibility Settings"
+msgstr "Accessibility instellingen"
+
+#: wp-accessibility.php:598
+msgid "Force search error on empty search submission (theme must have search.php template)"
+msgstr "Geef een foutmelding bij een lege zoekopdracht (uw thema moet beschikken over een search.php template)"
+
+#: wp-accessibility.php:606
+msgid "Add outline to elements on keyboard focus"
+msgstr "Voeg een outline toe aan elementen met toestenbord focus"
+
+#: wp-accessibility.php:606
+msgid "Outline color (hexadecimal, optional)"
+msgstr "Kleur outline (hexadecimaal, optioneel)"
+
+#: wp-accessibility.php:618
+msgid "Color Contrast Tester"
+msgstr "Tester voor kleurcontrast"
+
+#: wp-accessibility.php:635
+msgid "Luminosity Contrast Ratio for <code>#%2$s</code> and <code>#%3$s</code> is <strong>%1$s</strong> (Threshold: greater than 7:1 for AAA, 4.5:1 for AA)"
+msgstr "Helderheid/contrast ratio voor<code>#%2$s</code> en <code>#%3$s</code> is <strong>%1$s</strong> (drempelwaarde: groter dan 7:1 voor AAA, 4.5:1 voor AA)"
+
+#: wp-accessibility.php:637
+msgid "The colors compared <strong>pass</strong> the relative luminosity test at level AAA."
+msgstr "De vergeleken kleuren <strong>voldoen</strong> aan de eisen voor de relatieve helderheidstest van niveau AAA."
+
+#: wp-accessibility.php:640
+msgid "The colors compared <strong>pass</strong> the relative luminosity test at level AA."
+msgstr "De vergeleken kleuren <strong>voldoen</strong> aan de eisen voor de relatieve helderheidstest van niveau AA."
+
+#: wp-accessibility.php:643
+msgid "The colors compared pass the relative luminosity test <strong>only when used in large print</strong> situations (greater than 18pt text or 14pt bold text.)"
+msgstr "De vergeleken kleuren voldoen alleen aan de eisen voor de relatieve helderheidstest  <strong>voor grote letters</strong> (groter dan 18pt tekst of 14pt vette tekst.)"
+
+#: wp-accessibility.php:646
+msgid "The colors compared <strong>do not pass</strong> the relative luminosity test."
+msgstr "De vergeleken kleuren <strong>voldoen niet</strong> aan de eisen voor de relatieve helderheidstest."
+
+#: wp-accessibility.php:648
+msgid "Test another set of colors"
+msgstr "Test een andere set kleuren"
+
+#: wp-accessibility.php:663
+msgid "Test of relative luminosity"
+msgstr "Relatieve helderheidstest"
+
+#: wp-accessibility.php:665
+msgid "Foreground color"
+msgstr "Voorgrondkleur"
+
+#: wp-accessibility.php:666
+msgid "Background color"
+msgstr "Achtergrondkleur"
+
+#: wp-accessibility.php:673
+msgid "Check Color Contrast"
+msgstr "Controleer kleurcontrast"
+
+#: wp-accessibility.php:697
+msgid "If you've found WP Accessibility useful, then please consider <a href='http://wordpress.org/extend/plugins/wp-accessibility/'>rating it five stars</a>, <a href='http://www.joedolson.com/donate.php'>making a donation</a>, or <a href='http://translate.joedolson.com/projects/wp-accessibility'>helping with translation</a>."
+msgstr "Vind je WP Accessibility nuttig? Overweeg dan alsjeblieft  <a href='http://wordpress.org/extend/plugins/wp-accessibility/'>een 5 sterren beoordeling</a>, <a href='http://www.joedolson.com/donate.php'>een donatie</a>, of <a href='http://translate.joedolson.com/projects/wp-accessibility'>hulp bij de vertaling</a>."
+
+#: wp-accessibility.php:231
+msgid "Skip to content"
+msgstr "Spring naar de inhoud"
+
+#: wp-accessibility.php:233
+msgid "Skip to navigation"
+msgstr "Spring naar de navigatie"
+
+#: wp-accessibility.php:235
+msgid "Site map"
+msgstr "Sitemap"
+
+#: wp-accessibility.php:395
+msgid "Remove Title Attributes Settings Updated"
+msgstr "Instellingen aangepast voor het verwijderen van Title Attributes"
+
+#: wp-accessibility.php:415
+msgid "WP Accessibility does not provide any styles for visible skiplinks. You can still set the look of the links using the textareas provided, but all other layout must be assigned in your theme."
+msgstr "WP Accessibility heeft geen CSS stijl voor zichtbare skiplinks (omzeilende links). U kunt altijd de stijl van de links aanpassen met de beschikbare textareas, Alle andere aanpassingen aan de layout kan in uw thema worden gemaakt."
+
+#: wp-accessibility.php:419
+msgid "Add Skiplinks Settings Updated"
+msgstr "Instellingen Skiplinks toevoegen aangepast"
+
+#: wp-accessibility.php:447
+msgid "Miscellaneous Accessibility Settings Updated"
+msgstr "Diverse Accessibility instellingen aangepast"
+
+#: wp-accessibility.php:530
+msgid "WP Accessibility: Settings"
+msgstr "WP Accessibility: Instellingen"
+
+#: wp-accessibility.php:535
+msgid "Remove Title Attributes"
+msgstr "Verwijder Title Attributes"
+
+#: wp-accessibility.php:539
+msgid "Remove title attributes from:"
+msgstr "Verwijder title attributes van:"
+
+#: wp-accessibility.php:541
+msgid "Nav menus"
+msgstr "Nav menu's"
+
+#: wp-accessibility.php:542
+msgid "Page lists"
+msgstr "Paginalijsten"
+
+#: wp-accessibility.php:543
+msgid "Category lists"
+msgstr "Categorielijsten"
+
+#: wp-accessibility.php:544
+msgid "Archive links"
+msgstr "Archieflinks"
+
+#: wp-accessibility.php:545
+msgid "Tag clouds"
+msgstr "Tag clouds"
+
+#: wp-accessibility.php:546
+msgid "Category links"
+msgstr "Categorielinks"
+
+#: wp-accessibility.php:547
+msgid "Post edit links"
+msgstr "Bewerk links berichten"
+
+#: wp-accessibility.php:548
+msgid "Edit comment links"
+msgstr "Bewerk reacties link"
+
+#: wp-accessibility.php:555
+msgid "Update Title Attribute Settings"
+msgstr "Pas Title Attribute instellingen aan"
+
+#: wp-accessibility.php:561
+msgid "Add Skiplinks"
+msgstr "Voeg skiplinks toe"
+
+#: wp-accessibility.php:565
+msgid "Configure Skiplinks"
+msgstr "Configureer Skiplinks"
+
+#: wp-accessibility.php:567
+msgid "Enable Skiplinks"
+msgstr "Pas Skiplinks toe"
+
+#: wp-accessibility.php:568
+msgid "Skiplinks always visible"
+msgstr "Skiplinks zijn altijd zichtbaar"
+
+#: wp-accessibility.php:569
+msgid "Skip to Content link target (ID of your main content container)"
+msgstr "Sping naar inhoud linkdoel (ID van je hoofdinhoud container)"
+
+#: wp-accessibility.php:570
+msgid "Skip to Navigation link target (ID of your main navigation container)"
+msgstr "Spring naar navigatie linkdoel (ID van je hoofdnavigatie container)"
+
+#: wp-accessibility.php:571
+msgid "Site Map link target (URL for your site map)"
+msgstr "Sitemap linkdoel (URL van je sitemap)"
+
+#: wp-accessibility.php:572
+msgid "Add your own link (link or container ID)"
+msgstr "Voeg je eigen link toe (link of container ID)"
+
+#: wp-accessibility.php:572
+msgid "Link text for your link"
+msgstr "Linktekst voor je link"
+
+#: wp-accessibility.php:573
+msgid "Styles for Skiplinks when they have focus"
+msgstr "CSS-stijlen voor Skiplinks als ze focus hebben "
+
+#: wp-accessibility.php:575
+msgid "(Not currently visible)"
+msgstr "(Nu niet zichtbaar)"
+
+#: wp-accessibility.php:576
+msgid "Styles for Skiplinks without focus"
+msgstr "CSS-stijlen voor Skiplinks zonder focus"
+
+#: wp-accessibility.php:584
+msgid "Update Skiplink Settings"
+msgstr "Pas instellingen Skiplinks aan"
+
+#: wp-accessibility.php:590
+msgid "Miscellaneous Accessibility Settings"
+msgstr "Diverse Accessibility instellingen"
+
+#: wp-accessibility.php:594
+msgid "Miscellaneous"
+msgstr "Diverse"
+
+#: wp-accessibility.php:596
+msgid "Add Site Language and text direction to HTML element"
+msgstr "Voeg taal website en tekstrichting toe aan HTML element"
+
+#: wp-accessibility.php:597
+msgid "Remove target attribute from links"
+msgstr "Verwijder target attribute van links"
+
+#: wp-accessibility.php:599
+msgid "Remove tabindex from focusable elements"
+msgstr "Verwijder tabindex van elementen die focus kunnen hebben"
+
+#: wp-accessibility.php:601
+msgid "Remove title attribute from images inserted into post content and featured images."
+msgstr "Verwijder title attribute van afbeeldingen toegevoegd in een bericht en de uitgelichte afbeelding"
+
+#: wp-accessibility.php:604
+msgid "Add post title to \"more\" links."
+msgstr "Voeg titel bericht toe aan \"lees meer\" links"
+
+#: wp-accessibility.php:605
+msgid "Continue reading text"
+msgstr "Lees meer tekst"
+
+#: wp-accessibility.php:613
+msgid "Update Miscellaneous Settings"
+msgstr "Pas diverse instellingen aan"
+
+#: wp-accessibility.php:678
+msgid "Get Plug-in Support"
+msgstr "Krijg Plugin support"
+
+#: wp-accessibility.php:691
+msgid "Support this Plugin"
+msgstr "Ondersteun deze plugin"
+
+#: wp-accessibility.php:699
+msgid "<a href=\"http://www.joedolson.com/donate.php\">Make a donation today!</a> Every donation counts - donate $2, $10, or $100 and help me keep this plug-in running!"
+msgstr "<a href=\"http://www.joedolson.com/donate.php\">Geef vandaag een donatie!</a> Iedere donatie telt - geef $2, $10, of $100 en help me deze plugin verder te ontwikkelen!"
+
+#: wp-accessibility.php:715
+msgid "Accessibility References"
+msgstr "Referenties Accessibility"
+
+#: wp-accessibility.php:730
+msgid "Contributing References"
+msgstr "Referenties Bijdragers"
+
+#: wp-accessibility.php:798
+msgid "The most recent posts on your blog"
+msgstr "Het nieuwste bericht op je blog"
+
+#: wp-accessibility.php:799
+msgid "WP A11y: Recent Posts"
+msgstr "WP A11y: Recente berichten"
+
+#: wp-accessibility.php:821
+msgid "Recent Posts"
+msgstr "Recente berichten"
+
+#: wp-accessibility.php:864
+msgid "Title:"
+msgstr "Titel:"
+
+#: wp-accessibility.php:867
+msgid "Number of posts to show:"
+msgstr "Aantal berichten om te tonen:"
+
+#: wp-accessibility.php:961
+msgid "Please read the FAQ and other Help documents before making a support request."
+msgstr "Lees alstublieft de veelgestelde vragen en andere hulpdocumenten voordat u een support verzoek doet."
+
+#: wp-accessibility.php:963
+msgid "Please describe your problem. I'm not psychic."
+msgstr "Beschrijf alstublieft uw probleem. Ik ben niet helderziende."
+
+#: wp-accessibility.php:967
+msgid "Thank you for supporting the continuing development of this plug-in! I'll get back to you as soon as I can."
+msgstr "Bedankt voor het ondersteunen van de ontwikkeling van deze plugin. Ik snel zo snel mogelijk contact met u op."
+
+#: wp-accessibility.php:969
+msgid "I cannot provide free support, but will treat your request as a bug report, and will incorporate any permanent solutions I discover into the plug-in."
+msgstr "Ik kan geen gratis ondersteuning bieden, maar zal uw verzoek behandelen als een bug report en zal elke permanente oplossing toevoegen aan de plugin."
+
+#: wp-accessibility.php:981
+msgid "<strong>Please note</strong>: I do keep records of those who have donated, but if your donation came from somebody other than your account at this web site, you must note this in your message."
+msgstr "<strong>Let op</strong>: ik hou een register bij van alle donaties, maar als uw donatie van iemand anders kwam dan van uw account bij deze website, vermeld dit dan in uw bericht."
+
+#: wp-accessibility.php:985
+msgid "From:"
+msgstr "Van:"
+
+#: wp-accessibility.php:988
+msgid "I have read <a href=\"%1$s\">the FAQ for this plug-in</a> <span>(required)</span>"
+msgstr "Ik heb de <a href=\"%1$s\">veelgestelde vragen van deze plugin</a> gelezen <span>(verplicht)</span>"
+
+#: wp-accessibility.php:991
+msgid "I have <a href=\"%1$s\">made a donation to help support this plug-in</a>"
+msgstr "Ik heb een <a href=\"%1$s\">donatie gemaakt om deze plugin te ondersteunen</a>"
+
+#: wp-accessibility.php:994
+msgid "Support Request:"
+msgstr "Verzoek om support:"
+
+#: wp-accessibility.php:997
+msgid "Send Support Request"
+msgstr "Verzend supportverzoek"
+
+#: wp-accessibility.php:1000
+msgid "The following additional information will be sent with your support request:"
+msgstr "De volgende aanvullende informatie zal worden verzonden met uw supportverzoek:"
+
+msgid "WP Accessibility"
+msgstr "WP Accessibility"
+
+msgid "http://www.joedolson.com/articles/wp-accessibility/"
+msgstr "http://www.joedolson.com/articles/wp-accessibility/"
+
+msgid "Provides options to improve accessibility in your WordPress site, including removing title attributes."
+msgstr "Biedt mogelijkheden om de toegankelijkheid van je WordPress site te verbeteren, inclusief het verwijderen van title attributes."
+
+msgid "Joe Dolson"
+msgstr "Joe Dolson"
+
+msgid "http://www.joedolson.com/"
+msgstr "http://www.joedolson.com/"
