@@ -3,11 +3,11 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/articles/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.2.7
+Version: 1.2.8
 Author: Joe Dolson
 Author URI: http://www.joedolson.com/
 
-    Copyright 2012-2013 Joe Dolson (joe@joedolson.com)
+    Copyright 2012-2014 Joe Dolson (joe@joedolson.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.2.7';
+	$wpa_version = '1.2.8';
 	if ( get_option('wpa_installed') != 'true' ) {
 		add_option('rta_from_nav_menu', 'on');
 		add_option('rta_from_page_lists', 'on');
@@ -199,6 +199,9 @@ function wpa_css() {
 	$styles = '';
 	if ( get_option( 'asl_enable') == 'on' ) {
 		$focus = get_option( 'asl_styles_focus' );
+		if ( !$focus ) {
+			$focus = "background-color: #f1f1f1; border-radius: 3px; box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6); clip: auto; color: #21759b;	display: block; font-size: 14px; font-weight: bold; height: auto; line-height: normal; padding: 15px 23px 14px; position: absolute; left: 5px; top: 5px; text-decoration: none; text-transform: none; width: auto; z-index: 100000;";
+		}
 		$passive = get_option( 'asl_styles_passive' );
 		$vis = $invis = '';
 		// if links are visible, "hover" is a focus style, otherwise, it's a passive style.
@@ -858,7 +861,7 @@ function WP_Widget_Recent_Posts_No_Title_Attributes() {
 		ob_start();
 		extract($args);
 
-		$title = apply_filters('widget_title', empty($instance['title']) ? __('Recent Posts') : $instance['title']);
+		$title = apply_filters('widget_title', empty($instance['title']) ? __('Recent Posts') : $instance['title'], $instance, $args );
 		if ( !$number = (int) $instance['number'] ) { $number = 5; }
 
 		$r = new WP_Query(array('showposts' => $number, 'nopaging' => 0, 'post_status' => 'publish', 'ignore_sticky_posts' => 1));

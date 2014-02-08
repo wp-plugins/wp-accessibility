@@ -3,7 +3,7 @@ Contributors: joedolson
 Donate link: http://www.joedolson.com/donate.php
 Tags: title, accessibility, accessible, navigation, wcag, a11y, section508, focus
 Requires at least: 3.4.2
-Tested up to: 3.8.0
+Tested up to: 3.8.1
 Stable tag: 1.2.7
 License: GPLv2 or later
 
@@ -56,6 +56,10 @@ Visit the [WP Accessibility translations site](http://translate.joedolson.com/pr
 2. Customise your settings on the Settings > WP Accessibility page.
 
 == Changelog ==
+
+= 1.2.8 =
+
+* Bug fix: support for languages with right-to-left reading order.
 
 = 1.2.7 =
 
