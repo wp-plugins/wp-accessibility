@@ -45,7 +45,7 @@ The plug-in is intended to help with deficiencies commonly found in themes and t
 Translating my plug-ins is always appreciated. Visit <a href="http://translate.joedolson.com">my translations site</a> to start getting your language into shape!
 
 Available languages (in order of completeness):
-French, Dutch, Spanish, Romanian, Italian, German, Polish, Finnish
+Romanian, Dutch, French, Spanish, Italian, German, Polish, Finnish
 
 Visit the [WP Accessibility translations site](http://translate.joedolson.com/projects/wp-accessibility/) to check the progress of a translation.
 
@@ -61,6 +61,7 @@ Visit the [WP Accessibility translations site](http://translate.joedolson.com/pr
 
 * Bug fix: :focus states for skiplinks broken in 1.2.8.
 * Bug fix: WP Accessibility admin color issue in WP 3.8+
+* Auto-hide grayscale in Firefox even if enabled. See: https://gist.github.com/amandavisconti/8455507
 * Made accessibility toolbar available via widget or shortcode [wpa_toolbar]
 * Add Language: Romanian, by Adrian Tamasan
 * Updated language: Dutch
