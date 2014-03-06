@@ -13,8 +13,6 @@ a:focus {
 	text-decoration: underline!important;
 }
 
-#collapse-menu { color: #124964; }
-
 .next-page:focus, .next-page:hover, .last-page:focus, .last-page:hover, .prev-page:focus, .prev-page:hover, .first-page:focus, .first-page:hover {
 	border: 1px solid #124964!important;
 }

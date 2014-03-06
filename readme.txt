@@ -11,13 +11,13 @@ WP Accessibility provides fixes for common accessibility issues in your WordPres
 
 == Description ==
 
-This plug-in helps correct a variety of common accessibility problems in WordPress themes. While most accessibility issues can't be addressed without directly changing your theme, WP Accessibility adds a number of helpful accessibility features with the minimum amount of setup or expert knowledge.
+This plug-in helps with a variety of common accessibility problems in WordPress themes. While most accessibility issues can't be addressed without directly changing your theme, WP Accessibility adds a number of helpful accessibility features with a minimum amount of setup or expert knowledge.
 
 All features can be disabled according to your theme's needs. For advanced users, all of the functions based on modifying stylesheets can be customized using your own custom styles by placing the appropriate stylesheet in your theme directory.
 
-Accessibility Features provided by WP Accessibility:
+Accessibility Features added by WP Accessibility:
 
-* Enable skip links with WebKit support by enqueuing JavaScript support for moving keyboard focus.
+* Enable skip links with WebKit support by adding JavaScript support to move keyboard focus.
 * Add skip links with user-defined targets. (Customizable targets and appearance.)
 * Add language and text direction attributes to your HTML attribute
 * Add an outline to the keyboard focus state for focusable elements. 
@@ -31,7 +31,7 @@ Accessibility Issues fixed by WP Accessibility:
 * Strip title attributes from images inserted into content. 
 * Remove redundant title attributes from page lists, category lists, and archive menus. 
 * Add post titles to standard "read more" links.
-* Fix some accessibility issues in the WordPress admin styles
+* Address some accessibility issues in the WordPress admin styles
 
 Accessibility Tools built into WP Accessibility: 
 
@@ -45,7 +45,7 @@ The plug-in is intended to help with deficiencies commonly found in themes and t
 Translating my plug-ins is always appreciated. Visit <a href="http://translate.joedolson.com">my translations site</a> to start getting your language into shape!
 
 Available languages (in order of completeness):
-French, Dutch, Spanish, Italian, German, Polish, Finnish
+French, Dutch, Spanish, Romanian, Italian, German, Polish, Finnish
 
 Visit the [WP Accessibility translations site](http://translate.joedolson.com/projects/wp-accessibility/) to check the progress of a translation.
 
@@ -56,6 +56,14 @@ Visit the [WP Accessibility translations site](http://translate.joedolson.com/pr
 2. Customise your settings on the Settings > WP Accessibility page.
 
 == Changelog ==
+
+= 1.2.9 =
+
+* Bug fix: :focus states for skiplinks broken in 1.2.8.
+* Bug fix: WP Accessibility admin color issue in WP 3.8+
+* Made accessibility toolbar available via widget or shortcode [wpa_toolbar]
+* Add Language: Romanian, by Adrian Tamasan
+* Updated language: Dutch
 
 = 1.2.8 =
 
