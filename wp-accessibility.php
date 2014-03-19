@@ -3,7 +3,7 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/articles/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.2.9
+Version: 1.3.0
 Author: Joe Dolson
 Author URI: http://www.joedolson.com/
 
@@ -291,6 +291,11 @@ function wpa_jquery_asl() {
 	// force links to open in the same window
 	$targets = ( get_option( 'wpa_target' ) == 'on' )?"$('a').removeAttr('target');":'';
 	$tabindex = ( get_option( 'wpa_tabindex') == 'on' )?"$('input,a,select,textarea,button').removeAttr('tabindex');":'';
+	$longdesc = "
+	\$('img[longdesc]').each(function(){
+	var longdesc = \$(this).attr('longdesc');
+	\$(this).wrap('<a href=\"' + longdesc + '\" />');
+	});";
 	if ( $output || $lang ) { 
 		$script = "
 <script>
@@ -300,6 +305,7 @@ function wpa_jquery_asl() {
 		$targets
 		$lang_js
 		$tabindex
+		$longdesc
 	}(jQuery));
 //]]>
 </script>";
@@ -1195,8 +1201,3 @@ function longdesc_add_attr( $html, $id, $caption, $title, $align, $url, $size, $
 	return $html;
 }
 add_filter( 'image_send_to_editor', 'longdesc_add_attr', 10, 8 );
-
-
-/* Backward compatibility with previous versions. */
-add_action( 'wp_ajax_longdesc', 'longdesc' );
-add_action( 'wp_ajax_nopriv_longdesc', 'longdesc' );
