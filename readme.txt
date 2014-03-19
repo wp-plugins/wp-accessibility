@@ -57,6 +57,10 @@ Visit the [WP Accessibility translations site](http://translate.joedolson.com/pr
 
 == Changelog ==
 
+= 1.3.0 =
+
+* Add long description support. Requested by John Foliot; based on http://wordpress.org/plugins/long-description-for-image-attachments/
+
 = 1.2.9 =
 
 * Bug fix: :focus states for skiplinks broken in 1.2.8.
