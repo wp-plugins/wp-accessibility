@@ -293,9 +293,10 @@ function wpa_jquery_asl() {
 		$longdesc = "
 		\$('img[longdesc]').each(function(){
 		var longdesc = \$(this).attr('longdesc');
-		var text = \$(this).attr('alt');
+		var alt = \$(this).attr('alt');
+		\$(this).wrap('<div class=\"img-wrapper\" style=\"position:relative;display:inline-block\" />')
 		\$(this).attr( 'alt', '' );
-		\$(this).after('<a href=\"' + longdesc + '\">'+text+'</a>');
+		\$(this).parent('.img-wrapper').append('<a href=\"' + longdesc + '\" class=\"longdesc-link\">Description<span> of'+alt+'</span></a>');
 		});";
 	}
 	if ( get_option( 'wpa_longdesc' ) == 'jquery' ) {
@@ -304,8 +305,8 @@ function wpa_jquery_asl() {
 		\$('img[longdesc]').each(function(){
 		var longdesc = \$(this).attr('longdesc');
 		var text = '<span>Long Description</span>';
-		\$(this).wrap('<div class=\"img-wrapper\" aria-live=\"polite\" />')
-		\$(this).parent('.img-wrapper').append('<div class=\"longdesc\"></div>');
+		\$(this).wrap('<div class=\"img-wrapper\" style=\"position:relative;display:inline-block\" />')
+		\$(this).parent('.img-wrapper').append('<div class=\"longdesc\" aria-live=\"polite\"></div>');
 		\$(this).parent('.img-wrapper').append('<button>'+text+'</button>');
 		/* Generate characteristics for created elements */
 		\$(this).parent('.img-wrapper').children('.longdesc').hide().css( 'position', 'absolute' ).css( 'top', '0' ).css( 'width', '100%' );

@@ -29,4 +29,5 @@ if ( !defined( 'ABSPATH' ) && !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	delete_option( 'wpa_continue' );
 	delete_option( 'wpa_toolbar' );
 	delete_option( 'wpa_diagnostics' );
+	delete_option( 'wpa_longdesc' );
 }

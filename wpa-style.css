@@ -3,14 +3,19 @@
 .wpa-hide#skiplinks a:active, .wpa-hide#skiplinks a:focus { position: absolute; }
 
 .img-wrapper { display: inline-block; position: relative; }
+.img-wrapper a { bottom: 0; right: 0; position: absolute; }
+
 .img-wrapper button,.img-wrapper button:active,.img-wrapper button:focus,.img-wrapper button:hover  { 
 	width: 1em; height: 1em; line-height: 1;
-	font-size: .9em; font-weight: 400; background: rgba( 255, 255, 255, .8 ); border: none; padding: 2px; color: #000; text-shadow: 0 0 1px #999; 
+}
+
+.img-wrapper button, .img-wrapper button:active, .img-wrapper button:focus, .img-wrapper button:hover, .img-wrapper a {
+	font-size: .9em; font-weight: 400; background: rgba( 255, 255, 255, .8 ); border: none; padding: 2px; color: #000; text-shadow: 1px 1px #ccc; 
 }
 .img-wrapper .longdesc { background: rgba( 255, 255, 255, .95 ); padding: .5em; }
 .img-wrapper button:before { content: 'i'; font-style: italic; font-face: serif; }
 .img-wrapper button:focus,.img-wrapper button:hover { background: rgba( 0,0,0, .05 ); }
-.img-wrapper button span { 
+.img-wrapper button span, .longdesc-link span { 
 	position: absolute !important;
 	height: 1px; 
 	width: 1px; 
