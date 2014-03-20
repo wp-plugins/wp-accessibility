@@ -3,18 +3,24 @@
 .wpa-hide#skiplinks a:active, .wpa-hide#skiplinks a:focus { position: absolute; }
 
 .img-wrapper { display: inline-block; position: relative; }
-.img-wrapper a { bottom: 0; right: 0; position: absolute; }
+
+/* basic support for themes that don't define alignleft and alignright for non-image elements. */
+div.alignleft { float: left; }
+div.alignright { float: right; }
+div.aligncenter { display: block; margin: 0 auto; }
+
+.img-wrapper a,.img-wrapper button { bottom: 0; right: 0; position: absolute; }
 
 .img-wrapper button,.img-wrapper button:active,.img-wrapper button:focus,.img-wrapper button:hover  { 
-	width: 1em; height: 1em; line-height: 1;
+	border: 1px solid #777; border-radius: 2px; z-index: 10;
 }
 
 .img-wrapper button, .img-wrapper button:active, .img-wrapper button:focus, .img-wrapper button:hover, .img-wrapper a {
-	font-size: .9em; font-weight: 400; background: rgba( 255, 255, 255, .8 ); border: none; padding: 2px; color: #000; text-shadow: 1px 1px #ccc; 
+	font-size: .9em; font-weight: 400; background: rgba( 255, 255, 255, .85 )!important; padding: 2px; color: #000!important; text-shadow: 1px 1px #ccc; 
 }
 .img-wrapper .longdesc { background: rgba( 255, 255, 255, .95 ); padding: .5em; }
-.img-wrapper button:before { content: 'i'; font-style: italic; font-face: serif; }
-.img-wrapper button:focus,.img-wrapper button:hover { background: rgba( 0,0,0, .05 ); }
+.img-wrapper button:before { content: 'i'; font-style: italic; font-family: serif; }
+.img-wrapper button:focus, .img-wrapper button:hover { background: rgba( 0,0,0, .05 )!important; border: 1px solid #000!important; cursor: pointer;}
 .img-wrapper button span, .longdesc-link span { 
 	position: absolute !important;
 	height: 1px; 
