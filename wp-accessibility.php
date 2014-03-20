@@ -304,7 +304,7 @@ function wpa_jquery_asl() {
 		\$('img[longdesc]').each(function(){
 		var longdesc = \$(this).attr('longdesc');
 		var text = '<span>Long Description</span>';
-		\$(this).wrap('<div class=\"img-wrapper\" style=\"position:relative;display:inline-block\" />')
+		\$(this).wrap('<div class=\"img-wrapper\" aria-live=\"polite\" />')
 		\$(this).parent('.img-wrapper').append('<div class=\"longdesc\"></div>');
 		\$(this).parent('.img-wrapper').append('<button>'+text+'</button>');
 		/* Generate characteristics for created elements */

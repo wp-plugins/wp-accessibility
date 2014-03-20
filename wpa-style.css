@@ -2,6 +2,7 @@
 .wpa-hide-ltr#skiplinks a, .wpa-hide-ltr#skiplinks a:hover, .wpa-hide-ltr#skiplinks a:visited { position: absolute !important; left: -999em; }
 .wpa-hide#skiplinks a:active, .wpa-hide#skiplinks a:focus { position: absolute; }
 
+.img-wrapper { display: inline-block; position: relative; }
 .img-wrapper button,.img-wrapper button:active,.img-wrapper button:focus,.img-wrapper button:hover  { 
 	width: 1em; height: 1em; line-height: 1;
 	font-size: .9em; font-weight: 400; background: rgba( 255, 255, 255, .8 ); border: none; padding: 2px; color: #000; text-shadow: 0 0 1px #999; 
