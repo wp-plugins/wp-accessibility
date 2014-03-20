@@ -129,10 +129,7 @@ function wpa_register_scripts() {
 	wp_register_script( 'scrollTo', plugins_url( 'wp-accessibility/toolbar/js/jquery.scrollto.min.js' ), array( 'jquery' ), '1.4.5', true );
 }
 
-if ( get_option( 'asl_enable') == 'on' ) {
-	// insert skiplinks into DOM via jQuery
-	add_action( 'wp_footer', 'wpa_jquery_asl' );
-}
+add_action( 'wp_footer', 'wpa_jquery_asl' );
 if ( get_option( 'wpa_toolbar' ) == 'on' || get_option( 'wpa_widget_toolbar' ) == 'on' ) {
 	add_action( 'wp_footer', 'wpa_path_a11y' );
 }
@@ -266,7 +263,8 @@ function wpa_is_url($url) {
 	return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url);
 }
 
-function wpa_jquery_asl() {
+function wpa_jquery_asl() {		
+	$skiplinks_js = $targets = $lang_js = $tabindex = $longdesc = false;
 	$content = str_replace( '#','',esc_attr( get_option('asl_content') ) );
 	$visibility = ( get_option( 'asl_visible' ) == 'on' )?'wpa-visible':'wpa-hide';
 	$nav = str_replace( '#','',esc_attr( get_option('asl_navigation') ) );
@@ -283,20 +281,47 @@ function wpa_jquery_asl() {
 	$html .= ( $extra != '' && $extra_text != '' )?"<a href=\"$extra\">$extra_text</a> ":'';
 	$is_rtl = ( is_rtl() ) ? '-rtl' : '-ltr' ;
 	$output = ($html != '')?"<div class=\"$visibility$is_rtl\" id=\"skiplinks\" role=\"navigation\">$html</div>":'';
-		$skiplinks_js = ( $output )?"$('body').prepend('$output');":'';
+	$skiplinks_js = ( $output )?"$('body').prepend('$output');":'';
 	// attach language to html element
 	$lang = ( get_option( 'wpa_lang' ) == 'on' )?get_bloginfo('language'):false;
 	$dir = ( get_option( 'wpa_lang' ) == 'on' )?get_bloginfo('text_direction'):false;
-		$lang_js = "$('html').attr('lang','$lang'); $('html').attr('dir','$dir')";
+	$lang_js = "$('html').attr('lang','$lang'); $('html').attr('dir','$dir')";
 	// force links to open in the same window
 	$targets = ( get_option( 'wpa_target' ) == 'on' )?"$('a').removeAttr('target');":'';
 	$tabindex = ( get_option( 'wpa_tabindex') == 'on' )?"$('input,a,select,textarea,button').removeAttr('tabindex');":'';
-	$longdesc = "
-	\$('img[longdesc]').each(function(){
-	var longdesc = \$(this).attr('longdesc');
-	\$(this).wrap('<a href=\"' + longdesc + '\" />');
-	});";
-	if ( $output || $lang ) { 
+	if ( get_option( 'wpa_longdesc' ) == 'link' ) {
+		$longdesc = "
+		\$('img[longdesc]').each(function(){
+		var longdesc = \$(this).attr('longdesc');
+		var text = \$(this).attr('alt');
+		\$(this).attr( 'alt', '' );
+		\$(this).after('<a href=\"' + longdesc + '\">'+text+'</a>');
+		});";
+	}
+	if ( get_option( 'wpa_longdesc' ) == 'jquery' ) {
+		// wrap in inline element to avoid disrupting layout
+		$longdesc .= "
+		\$('img[longdesc]').each(function(){
+		var longdesc = \$(this).attr('longdesc');
+		var text = '<span>Long Description</span>';
+		\$(this).wrap('<div class=\"img-wrapper\" style=\"position:relative;display:inline-block\" />')
+		\$(this).parent('.img-wrapper').append('<div class=\"longdesc\"></div>');
+		\$(this).parent('.img-wrapper').append('<button>'+text+'</button>');
+		/* Generate characteristics for created elements */
+		\$(this).parent('.img-wrapper').children('.longdesc').hide().css( 'position', 'absolute' ).css( 'top', '0' ).css( 'width', '100%' );
+		\$(this).parent('.img-wrapper').children('button').css( 'position', 'absolute' ).css( 'bottom', '0' ).css( 'right', '0' );
+
+		\$(this).parent('.img-wrapper').children('.longdesc').load( longdesc + ' #desc');
+		\$(this).parent('.img-wrapper').children('button').toggle( function() {
+			\$(this).parent('.img-wrapper').children('.longdesc').show();	
+		}, function() {
+			\$(this).parent('.img-wrapper').children('.longdesc').hide();
+		});
+		});";
+	}
+	$display = ( $skiplinks_js || $targets || $lang_js || $tabindex || $longdesc ) ? true : false ;
+
+	if ( $display ) { 
 		$script = "
 <script>
 //<![CDATA[
@@ -504,6 +529,7 @@ function wpa_update_settings() {
 			$wpa_target = ( isset( $_POST['wpa_target'] ) )?'on':'';
 			$wpa_search = ( isset( $_POST['wpa_search'] ) )?'on':'';
 			$wpa_tabindex = ( isset ( $_POST['wpa_tabindex'] ) )?'on':'';
+			$wpa_longdesc = ( isset ( $_POST['wpa_longdesc'] ) ) ? esc_attr( $_POST['wpa_longdesc'] ) : 'false';
 			$wpa_image_titles = ( isset ( $_POST['wpa_image_titles'] ) )?'on':'';
 			$wpa_more = ( isset ( $_POST['wpa_more'] ) )?'on':'';
 			$wpa_focus = ( isset ( $_POST['wpa_focus'] ) )?'on':'';
@@ -519,6 +545,7 @@ function wpa_update_settings() {
 			update_option('wpa_target', $wpa_target );
 			update_option('wpa_search', $wpa_search );
 			update_option('wpa_tabindex', $wpa_tabindex );
+			update_option('wpa_longdesc', $wpa_longdesc );
 			update_option('wpa_image_titles', $wpa_image_titles );
 			update_option('wpa_more', $wpa_more );
 			update_option('wpa_focus', $wpa_focus );
@@ -682,6 +709,12 @@ function wpa_admin_menu() { ?>
 						<li><input type="checkbox" id="wpa_target" name="wpa_target" <?php if ( get_option('wpa_target') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_target"><?php _e('Remove target attribute from links','wp-accessibility'); ?></label></li>
 						<li><input type="checkbox" id="wpa_search" name="wpa_search" <?php if ( get_option('wpa_search') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_search"><?php _e('Force search error on empty search submission (theme must have search.php template)','wp-accessibility'); ?></label></li>
 						<li><input type="checkbox" id="wpa_tabindex" name="wpa_tabindex" <?php if ( get_option('wpa_tabindex') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_tabindex"><?php _e('Remove tabindex from focusable elements','wp-accessibility'); ?></label></li>
+						<li><label for="wpa_longdesc"><?php _e('Long Description UI','wp-accessibility'); ?></label> <select id="wpa_longdesc" name="wpa_longdesc">
+							<option value='link'<?php if ( get_option('wpa_longdesc') == "link") { echo 'selected="selected" '; } ?>><?php _e('Link to description','wp-accessibility'); ?></option>
+							<option value='jquery'<?php if ( get_option('wpa_longdesc') == "jquery") { echo 'selected="selected" '; } ?>><?php _e('Button trigger to overlay image','wp-accessibility'); ?></option>
+							<option value='false'<?php if ( get_option('wpa_longdesc') == "false") { echo 'selected="selected" '; } ?>s><?php _e('Browser defaults only','wp-accessibility'); ?></option>	
+						</select>
+						</li>
 						<li><input type="checkbox" id="wpa_admin_css" name="wpa_admin_css" <?php if ( get_option('wpa_admin_css') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_admin_css"><?php _e('Enable WordPress Admin stylesheet','wp-accessibility'); ?></label></li>
 						<li><input type="checkbox" id="wpa_row_actions" name="wpa_row_actions" <?php if ( get_option('wpa_row_actions') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_row_actions"><?php _e('Make row actions always visible','wp-accessibility'); ?></label></li>						
 						<li><input type="checkbox" id="wpa_image_titles" name="wpa_image_titles" <?php if ( get_option('wpa_image_titles') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_image_titles"><?php _e('Remove title attribute from images inserted into post content and featured images.','wp-accessibility'); ?></label></li>
@@ -1186,12 +1219,12 @@ function longdesc_add_attr( $html, $id, $caption, $title, $align, $url, $size, $
 
 	/* Get data for the image attachment. */
 	$image = get_post( $id );
-
+	global $post_ID;
 	if ( isset( $image->ID ) && !empty( $image->ID ) ) {
 		$args = array( 'longdesc' => $image->ID );
 		/* The referrer is the post that the image is inserted into. */
-		if ( isset( $_GET['post_id'] ) ) {
-			$args['referrer'] = (int) $_GET['post_id'];
+		if ( isset( $_REQUEST['post_id'] ) ) {
+			$args['referrer'] = (int) $_REQUEST['post_id'];
 		}
 		$search = '<img';
 		$replace = $search . ' longdesc="' . esc_url( add_query_arg( $args, home_url() ) ) . '"';

@@ -8,8 +8,10 @@
 </head>
 <body>
 	<div id="longdesc">
+		<div id="desc">
+	<?php  the_content(); ?>
+		</div>
 	<?php
-		the_content();
 		if( isset( $_GET['referrer'] ) ) {
 			$uri = get_permalink( (int) $_GET['referrer'] );
 			if( !empty( $uri ) ) {
