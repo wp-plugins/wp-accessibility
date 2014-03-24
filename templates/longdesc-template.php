@@ -4,10 +4,10 @@
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <title><?php the_title(); ?></title>
 <link rel="stylesheet" type="text/css" href="<?php print get_stylesheet_uri(); ?>">
-<style> #longdesc { width:50em; padding:1em; margin:1em auto; background:#fff; color:#333; border:1px solid #333; } </style>
+<link rel="stylesheet" type="text/css" href="<?php print plugins_url( '/wp-accessibility/wpa-style.css' ); ?>">
 </head>
 <body>
-	<div id="longdesc">
+	<div id="longdesc" class="template-longdesc">
 		<div id="desc">
 	<?php  the_content(); ?>
 		</div>

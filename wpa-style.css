@@ -29,3 +29,5 @@ div.aligncenter { display: block; margin: 0 auto; }
 	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */ 
 	clip: rect(1px, 1px, 1px, 1px);
 }
+
+.template-longdesc { text-align: left; line-height: 1.5; width: 100%; max-width:50em; padding:2em; margin:1em auto; background:#fdfdfd; color:#333; box-shadow: 0 0 5px; font-size: 1.4em; }

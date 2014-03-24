@@ -298,6 +298,7 @@ function wpa_jquery_asl() {
 		\$(this).wrap('<div class=\"img-wrapper\" />');
 		\$(this).parent('.img-wrapper').addClass( classes );
 		\$(this).attr( 'alt', '' );
+		\$(this).attr( 'class', '' );		
 		\$(this).parent('.img-wrapper').append('<a href=\"' + longdesc + '\" class=\"longdesc-link\">Description<span> of'+alt+'</span></a>');
 		});";
 	}
@@ -308,6 +309,7 @@ function wpa_jquery_asl() {
 		var longdesc = \$(this).attr('longdesc');
 		var text = '<span>Long Description</span>';
 		var classes = \$(this).attr('class');
+		\$(this).attr( 'class', '' );
 		\$(this).wrap('<div class=\"img-wrapper\" />')
 		\$(this).parent('.img-wrapper').addClass( classes );		
 		\$(this).parent('.img-wrapper').append('<div class=\"longdesc\" aria-live=\"polite\"></div>');
