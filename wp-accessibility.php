@@ -54,7 +54,8 @@ function wpa_install() {
 		add_option('wpa_continue','Continue Reading');
 		add_option('wpa_focus','');
 		add_option( 'wpa_installed', 'true' );
-		add_option( 'wpa_version', $version );		
+		add_option( 'wpa_version', $version );	
+		add_option( 'wpa_longdesc', 'jquery' );
 	} else {
 		wpa_check_version();
 		update_option( 'wpa_version', $version );
@@ -62,7 +63,10 @@ function wpa_install() {
 }
 
 function wpa_check_version() {
-	return true; // not needed yet
+	// upgrade for version 1.3.0
+	if ( version_compare( get_option( 'wpa_version' ), '1.3.0', '<' ) ) {
+		add_option( 'wpa_longdesc', 'jquery' );
+	}
 }
 
 function wpa_plugin_action($links, $file) {
@@ -687,7 +691,7 @@ function wpa_admin_menu() { ?>
 						<li><label for="wpa_longdesc"><?php _e('Long Description UI','wp-accessibility'); ?></label> <select id="wpa_longdesc" name="wpa_longdesc">
 							<option value='link'<?php if ( get_option('wpa_longdesc') == "link") { echo 'selected="selected" '; } ?>><?php _e('Link to description','wp-accessibility'); ?></option>
 							<option value='jquery'<?php if ( get_option('wpa_longdesc') == "jquery") { echo 'selected="selected" '; } ?>><?php _e('Button trigger to overlay image','wp-accessibility'); ?></option>
-							<option value='false'<?php if ( get_option('wpa_longdesc') == "false") { echo 'selected="selected" '; } ?>s><?php _e('Browser defaults only','wp-accessibility'); ?></option>	
+							<option value='false'<?php if ( get_option('wpa_longdesc') == "false" || !get_option( 'wpa_longdesc' ) ) { echo 'selected="selected" '; } ?>s><?php _e('Browser defaults only','wp-accessibility'); ?></option>	
 						</select>
 						</li>
 						<li><input type="checkbox" id="wpa_admin_css" name="wpa_admin_css" <?php if ( get_option('wpa_admin_css') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_admin_css"><?php _e('Enable WordPress Admin stylesheet','wp-accessibility'); ?></label></li>
