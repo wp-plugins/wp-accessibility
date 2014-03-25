@@ -22,6 +22,7 @@ Accessibility Features added by WP Accessibility:
 * Add language and text direction attributes to your HTML attribute
 * Add an outline to the keyboard focus state for focusable elements. 
 * Add a toolbar toggling between high contrast, large print, and desaturated (grayscale) views of your theme.
+* Add a long description to images. Use the image's "Description" field to add long descriptions.
 
 Accessibility Issues fixed by WP Accessibility: 
 

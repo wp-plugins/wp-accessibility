@@ -36,7 +36,7 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.2.9';
+	$wpa_version = '1.3.0';
 	if ( get_option('wpa_installed') != 'true' ) {
 		add_option('rta_from_nav_menu', 'on');
 		add_option('rta_from_page_lists', 'on');
@@ -833,6 +833,7 @@ if ( $l_contrast ) {
 						<li><a href="http://accessites.org/site/2008/11/wordpress-and-accessibility/#comment-2926">WordPress and Accessibility (Comment)</a></li>
 						<li><a href="http://wordpress.org/extend/plugins/img-title-removal/">IMG Title Removal</a></li>
 						<li><a href="http://www.usableinteractions.com/2012/11/accessibility-toolbar/">Accessibility Toolbar</a></li>
+						<li><a href="https://wordpress.org/plugins/long-description-for-image-attachments/">WordPress Long Description</a></li>
 					</ul>
 				</div>
 			</div>
@@ -840,14 +841,17 @@ if ( $l_contrast ) {
 
 		<div class="ui-sortable meta-box-sortables">
 			<div class="postbox">
-				<h3><?php _e('Accessibility Toolbar Notes','wp-accessibility'); ?></h3>
+				<h3><?php _e('Customization Notes','wp-accessibility'); ?></h3>
 				<div class="inside">
 					<p>
-					<?php _e('It is almost impossible for the Accessibility Toolbar to guarantee a good result for large text or high contrast modes. You can author your own high-contrast styles by placing a stylesheet called <code>a11y-contrast.css</code> in your Theme\'s stylesheet directory.','wp-accessibility'); ?>
+					<?php _e('It is almost impossible for the Accessibility Toolbar to guarantee a good result for large text or high contrast modes. Author your own high-contrast styles by placing a stylesheet called <code>a11y-contrast.css</code> in your Theme\'s stylesheet directory.','wp-accessibility'); ?>
 					</p>
 					<p>
-					<?php _e('You can define custom styles for the large print view by defining them under the body class <code>.fontsize</code> in your theme stylesheet.'); ?>
+					<?php _e('Define custom styles for large print by asssigning them in the body class <code>.fontsize</code> in your theme stylesheet.','wp-accessibility' ); ?>
 					</p>
+					<p>
+					<?php _e('Define a custom long description template by adding the template "longdesc-template.php" to your theme directory.','wp-accessibility' ); ?>
+					</p>					
 				</div>
 			</div>
 		</div>			
