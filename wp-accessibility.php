@@ -162,6 +162,12 @@ function wpa_enqueue_scripts() {
 	if ( get_option( 'wpa_toolbar' ) == 'on' ) {
 		add_action( 'wp_footer','wpa_toolbar_js');
 	}
+	if ( get_option( 'wpa_longdesc' ) == 'link' ) {
+		wp_enqueue_script( 'longdesc.link', plugins_url( 'js/longdesc.link.js', __FILE__ ), array( 'jquery' ), '1.0', true );
+	}
+	if ( get_option( 'wpa_longdesc' ) == 'jquery' ) {
+		wp_enqueue_script( 'longdesc.button', plugins_url( 'js/longdesc.button.js', __FILE__ ), array( 'jquery' ), '1.0', true );
+	}	
 }
 
 add_action('widgets_init', create_function('', 'return register_widget("wp_accessibility_toolbar");') );
@@ -289,43 +295,6 @@ function wpa_jquery_asl() {
 	// force links to open in the same window
 	$targets = ( get_option( 'wpa_target' ) == 'on' )?"$('a').removeAttr('target');":'';
 	$tabindex = ( get_option( 'wpa_tabindex') == 'on' )?"$('input,a,select,textarea,button').removeAttr('tabindex');":'';
-	if ( get_option( 'wpa_longdesc' ) == 'link' ) {
-		$longdesc = "
-		\$('img[longdesc]').each(function(){
-		var longdesc = \$(this).attr('longdesc');
-		var alt = \$(this).attr('alt');
-		var classes = \$(this).attr('class');
-		\$(this).wrap('<div class=\"img-wrapper\" />');
-		\$(this).parent('.img-wrapper').addClass( classes );
-		\$(this).attr( 'alt', '' );
-		\$(this).attr( 'class', '' );		
-		\$(this).parent('.img-wrapper').append('<a href=\"' + longdesc + '\" class=\"longdesc-link\">Description<span> of'+alt+'</span></a>');
-		});";
-	}
-	if ( get_option( 'wpa_longdesc' ) == 'jquery' ) {
-		// wrap in inline element to avoid disrupting layout
-		$longdesc .= "
-		\$('img[longdesc]').each(function(){
-		var longdesc = \$(this).attr('longdesc');
-		var text = '<span>Long Description</span>';
-		var classes = \$(this).attr('class');
-		\$(this).attr( 'class', '' );
-		\$(this).wrap('<div class=\"img-wrapper\" />')
-		\$(this).parent('.img-wrapper').addClass( classes );		
-		\$(this).parent('.img-wrapper').append('<div class=\"longdesc\" aria-live=\"polite\"></div>');
-		\$(this).parent('.img-wrapper').append('<button>'+text+'</button>');
-		/* Generate characteristics for created elements */
-		\$(this).parent('.img-wrapper').children('.longdesc').hide().css( 'position', 'absolute' ).css( 'top', '0' ).css( 'width', '100%' );
-		\$(this).parent('.img-wrapper').children('button');
-
-		\$(this).parent('.img-wrapper').children('.longdesc').load( longdesc + ' #desc');
-		\$(this).parent('.img-wrapper').children('button').toggle( function() {
-			\$(this).parent('.img-wrapper').children('.longdesc').show();	
-		}, function() {
-			\$(this).parent('.img-wrapper').children('.longdesc').hide();
-		});
-		});";
-	}
 	$display = ( $skiplinks_js || $targets || $lang_js || $tabindex || $longdesc ) ? true : false ;
 
 	if ( $display ) { 
@@ -337,7 +306,6 @@ function wpa_jquery_asl() {
 		$targets
 		$lang_js
 		$tabindex
-		$longdesc
 	}(jQuery));
 //]]>
 </script>";
