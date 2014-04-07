@@ -16,7 +16,7 @@
 <body>
 	<div id="longdesc" class="template-longdesc">
 		<div id="desc">
-	<?php  the_content(); ?>
+		<?php the_content(); ?>
 		</div>
 	<?php
 		if( isset( $_GET['referrer'] ) ) {

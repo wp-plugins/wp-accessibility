@@ -58,6 +58,11 @@ Visit the [WP Accessibility translations site](http://translate.joedolson.com/pr
 
 == Changelog ==
 
+= 1.3.1 =
+* Emended a JS comment that some plug-ins were treating as a node...
+* Updated .pot file with long description strings.
+* Bug fix: longdesc attribute added even if description field empty.
+
 = 1.3.0 =
 
 * Add long description support. Requested by John Foliot; based on http://wordpress.org/plugins/long-description-for-image-attachments/

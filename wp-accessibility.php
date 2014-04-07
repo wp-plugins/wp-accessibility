@@ -3,7 +3,7 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/articles/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.3.0
+Version: 1.3.1
 Author: Joe Dolson
 Author URI: http://www.joedolson.com/
 
@@ -36,7 +36,7 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.3.0';
+	$wpa_version = '1.3.1';
 	if ( get_option('wpa_installed') != 'true' ) {
 		add_option('rta_from_nav_menu', 'on');
 		add_option('rta_from_page_lists', 'on');
@@ -216,7 +216,6 @@ echo
 <script type='text/javascript'>
 //<![CDATA[
 	(function( $ ) { 'use strict';
-		// Prepend our toolbar to the left side of the page, right under <body>
 		var insert_a11y_toolbar = '<!-- a11y toolbar -->';
 		insert_a11y_toolbar += '<div class=\"a11y-toolbar\">';
 		insert_a11y_toolbar += '<ul>';
@@ -1170,7 +1169,6 @@ function longdesc_template() {
 }
 add_action( 'template_redirect', 'longdesc_template' );
 
-
 /**
  * Anchor.
  *
@@ -1185,7 +1183,6 @@ add_action( 'template_redirect', 'longdesc_template' );
 function longdesc_return_anchor( $id ) {
 	return 'longdesc-return-' . $id;
 }
-
 
 /**
  * Add Attribute.
@@ -1209,10 +1206,12 @@ function longdesc_add_attr( $html, $id, $caption, $title, $align, $url, $size, $
 		if ( isset( $_REQUEST['post_id'] ) ) {
 			$args['referrer'] = (int) $_REQUEST['post_id'];
 		}
-		$search = '<img';
-		$replace = $search . ' longdesc="' . esc_url( add_query_arg( $args, home_url() ) ) . '"';
-		$html = str_replace( $search, $replace, $html );
-		$html.= '<a id="' . esc_attr( longdesc_return_anchor( $image->ID ) ) . '"></a>';
+		if ( !empty( $image->post_content ) ) {
+			$search = '<img';
+			$replace = $search . ' longdesc="' . esc_url( add_query_arg( $args, home_url() ) ) . '"';
+			$html = str_replace( $search, $replace, $html );
+			$html.= '<a id="' . esc_attr( longdesc_return_anchor( $image->ID ) ) . '"></a>';
+		}
 	}
 	return $html;
 }
