@@ -3,7 +3,7 @@ Contributors: joedolson
 Donate link: http://www.joedolson.com/donate.php
 Tags: title, accessibility, accessible, navigation, wcag, a11y, section508, focus
 Requires at least: 3.4.2
-Tested up to: 3.8.1
+Tested up to: 3.9.1
 Stable tag: 1.3.1
 License: GPLv2 or later
 
