@@ -30,4 +30,9 @@ if ( !defined( 'ABSPATH' ) && !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	delete_option( 'wpa_toolbar' );
 	delete_option( 'wpa_diagnostics' );
 	delete_option( 'wpa_longdesc' );
+	delete_option( 'wpa_underline' );
+	delete_option( 'wpa_insert_roles' );
+	delete_option( 'wpa_focus' );
+	delete_option( 'wpa_focus_color' );
+	delete_option( 'wpa_complementary_container' );
 }
