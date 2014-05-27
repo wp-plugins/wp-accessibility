@@ -3,7 +3,7 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/articles/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.3.1
+Version: 1.3.2
 Author: Joe Dolson
 Author URI: http://www.joedolson.com/
 
@@ -36,23 +36,23 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.3.1';
+	$wpa_version = '1.3.2';
 	if ( get_option('wpa_installed') != 'true' ) {
-		add_option('rta_from_nav_menu', 'on');
-		add_option('rta_from_page_lists', 'on');
-		add_option('rta_from_category_lists', 'on');
-		add_option('rta_from_archive_links', 'on');
-		add_option('rta_from_tag_clouds', 'on');
-		add_option('rta_from_category_links', 'on');
-		add_option('rta_from_post_edit_links', 'on');
-		add_option('rta_from_edit_comment_links', 'on');
-		add_option('asl_styles_focus', 'left: 1em; top: 1em; background: #f6f3fa; color: #00c; padding: 5px; border: 1px solid #357; box-shadow: 2px 2px 2px #777; border-radius: 5px; font-size: 1.4em' );
-		add_option('asl_styles_passive', '' );
-		add_option('wpa_target','on');
-		add_option('wpa_search','on');
-		add_option('wpa_tabindex','on');
-		add_option('wpa_continue','Continue Reading');
-		add_option('wpa_focus','');
+		add_option( 'rta_from_nav_menu', 'on' );
+		add_option( 'rta_from_page_lists', 'on' );
+		add_option( 'rta_from_category_lists', 'on' );
+		add_option( 'rta_from_archive_links', 'on' );
+		add_option( 'rta_from_tag_clouds', 'on' );
+		add_option( 'rta_from_category_links', 'on' );
+		add_option( 'rta_from_post_edit_links', 'on' );
+		add_option( 'rta_from_edit_comment_links', 'on' );
+		add_option( 'asl_styles_focus', 'left: 1em; top: 1em; background: #f6f3fa; color: #00c; padding: 5px; border: 1px solid #357; box-shadow: 2px 2px 2px #777; border-radius: 5px; font-size: 1.4em' );
+		add_option( 'asl_styles_passive', '' );
+		add_option( 'wpa_target','on' );
+		add_option( 'wpa_search','on' );
+		add_option( 'wpa_tabindex','on' );
+		add_option( 'wpa_continue','Continue Reading' );
+		add_option( 'wpa_focus', '' );
 		add_option( 'wpa_installed', 'true' );
 		add_option( 'wpa_version', $version );	
 		add_option( 'wpa_longdesc', 'jquery' );
