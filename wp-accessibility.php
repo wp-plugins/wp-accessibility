@@ -134,10 +134,6 @@ function wpa_register_scripts() {
 }
 
 add_action( 'wp_footer', 'wpa_jquery_asl' );
-if ( get_option( 'wpa_toolbar' ) == 'on' || get_option( 'wpa_widget_toolbar' ) == 'on' ) {
-	add_action( 'wp_footer', 'wpa_path_a11y' );
-}
-
 add_action( 'wp_enqueue_scripts','wpa_enqueue_scripts' );
 add_action( 'wp_head', 'wpa_css' );
 add_action( 'wp_enqueue_scripts', 'wpa_core_scripts' );
@@ -147,14 +143,6 @@ function wpa_core_scripts() {
 	wp_enqueue_script( 'jquery' );
 }
 
-function wpa_path_a11y() {
-	$plugin_path = plugins_url( 'wp-accessibility/toolbar/css/a11y-contrast.css' );
-	if ( file_exists( get_stylesheet_directory() . '/a11y-contrast.css' ) ) {
-		$plugin_path = get_stylesheet_directory_uri() . '/a11y-contrast.css';
-	}
-	echo "<span class='a11y_stylesheet_path'>$plugin_path</span>\n";
-}
-
 function wpa_enqueue_scripts() {
 	if ( get_option( 'asl_enable') == 'on' ) {
 		wp_enqueue_script( 'skiplinks.webkit' );
@@ -162,6 +150,20 @@ function wpa_enqueue_scripts() {
 	if ( get_option( 'wpa_toolbar' ) == 'on' || get_option( 'wpa_widget_toolbar' ) == 'on' ) {
 		wp_enqueue_script( 'scrollTo' );
 		wp_enqueue_script( 'ui-a11y.js' );
+		$plugin_path = plugins_url( 'wp-accessibility/toolbar/css/a11y-contrast.css' );
+		if ( file_exists( get_stylesheet_directory() . '/a11y-contrast.css' ) ) {
+			$plugin_path = get_stylesheet_directory_uri() . '/a11y-contrast.css';
+		}
+		wp_localize_script( 'ui-a11y.js', 'a11y_stylesheet_path', $plugin_path );
+	}
+	if ( get_option( 'wpa_insert_roles' ) == 'on' ) {
+		wp_enqueue_script( 'wpa-complementary', plugins_url( 'js/roles.jquery.js', __FILE__ ), array( 'jquery' ), '1.0', true );
+		if ( get_option( 'wpa_complementary_container' ) ) {
+			$wpa_comp = get_option( 'wpa_complementary_container' );
+		} else {
+			$wpa_comp = false;
+		}
+		wp_localize_script( 'wpa-complementary', 'wpaComplementary', $wpa_comp );
 	}
 	if ( get_option( 'wpa_toolbar' ) == 'on' ) {
 		add_action( 'wp_footer','wpa_toolbar_js');
@@ -296,11 +298,12 @@ function wpa_jquery_asl() {
 	$dir = ( get_option( 'wpa_lang' ) == 'on' )?get_bloginfo('text_direction'):false;
 	$lang_js = "$('html').attr('lang','$lang'); $('html').attr('dir','$dir')";
 	// force links to open in the same window
-	$targets = ( get_option( 'wpa_target' ) == 'on' )?"$('a').removeAttr('target');":'';
-	$tabindex = ( get_option( 'wpa_tabindex') == 'on' )?"$('input,a,select,textarea,button').removeAttr('tabindex');":'';
-	$display = ( $skiplinks_js || $targets || $lang_js || $tabindex || $longdesc ) ? true : false ;
+	$targets = ( get_option( 'wpa_target' ) == 'on' ) ? "$('a').removeAttr('target');":'';
+	$tabindex = ( get_option( 'wpa_tabindex') == 'on' ) ? "$('input,a,select,textarea,button').removeAttr('tabindex');":'';
+	$underlines = ( get_option( 'wpa_underline') == 'on' ) ? "$('a').css( 'text-decoration','underline' );$('a').on( 'focusin mouseenter', function() { $(this).css( 'text-decoration','none' ); });$('a').on( 'focusout mouseleave', function() { $(this).css( 'text-decoration','underline' ); } );" : '';
 
-	if ( $display ) { 
+	$display = ( $skiplinks_js || $targets || $lang_js || $tabindex || $longdesc ) ? true : false ;
+	if ( $display ) {
 		$script = "
 <script>
 //<![CDATA[
@@ -309,6 +312,7 @@ function wpa_jquery_asl() {
 		$targets
 		$lang_js
 		$tabindex
+		$underlines
 	}(jQuery));
 //]]>
 </script>";
@@ -503,38 +507,44 @@ function wpa_update_settings() {
 			return "<div class='updated'><p>".$message."</p>$notice</div>";
 		}
 		if ( isset($_POST['action']) && $_POST['action'] == 'misc' ) {
-			$wpa_lang = ( isset( $_POST['wpa_lang'] ) )?'on':'';
-			$wpa_target = ( isset( $_POST['wpa_target'] ) )?'on':'';
-			$wpa_search = ( isset( $_POST['wpa_search'] ) )?'on':'';
-			$wpa_tabindex = ( isset ( $_POST['wpa_tabindex'] ) )?'on':'';
+			$wpa_lang = ( isset( $_POST['wpa_lang'] ) ) ? 'on':'';
+			$wpa_target = ( isset( $_POST['wpa_target'] ) ) ? 'on':'';
+			$wpa_search = ( isset( $_POST['wpa_search'] ) ) ? 'on':'';
+			$wpa_tabindex = ( isset ( $_POST['wpa_tabindex'] ) ) ? 'on':'';
+			$wpa_underline = ( isset ( $_POST['wpa_underline'] ) ) ? 'on' : '';
 			$wpa_longdesc = ( isset ( $_POST['wpa_longdesc'] ) ) ? esc_attr( $_POST['wpa_longdesc'] ) : 'false';
-			$wpa_image_titles = ( isset ( $_POST['wpa_image_titles'] ) )?'on':'';
-			$wpa_more = ( isset ( $_POST['wpa_more'] ) )?'on':'';
-			$wpa_focus = ( isset ( $_POST['wpa_focus'] ) )?'on':'';
-			$wpa_focus_color = ( isset( $_POST['wpa_focus_color'] ) )?str_replace( '#', '', $_POST['wpa_focus_color'] ):'';
-			$wpa_continue = ( isset( $_POST['wpa_continue'] ) )?$_POST['wpa_continue']:'Continue Reading';
-			$wpa_toolbar = ( isset( $_POST['wpa_toolbar'] ) )?'on':'';
-			$wpa_widget_toolbar = ( isset( $_POST['wpa_widget_toolbar'] ) )?'on':'';
-			$wpa_toolbar_gs = ( isset( $_POST['wpa_toolbar_gs'] ) )?'on':'';
-			$wpa_admin_css = ( isset( $_POST['wpa_admin_css'] ) )?'on':'';
-			$wpa_row_actions = ( isset( $_POST['wpa_row_actions'] ) ) ? 'on' : '';
-			$wpa_diagnostics = ( isset( $_POST['wpa_diagnostics'] ) )?'on':'';
-			update_option('wpa_lang', $wpa_lang );
-			update_option('wpa_target', $wpa_target );
-			update_option('wpa_search', $wpa_search );
-			update_option('wpa_tabindex', $wpa_tabindex );
-			update_option('wpa_longdesc', $wpa_longdesc );
-			update_option('wpa_image_titles', $wpa_image_titles );
-			update_option('wpa_more', $wpa_more );
-			update_option('wpa_focus', $wpa_focus );
-			update_option('wpa_toolbar', $wpa_toolbar );
-			update_option('wpa_widget_toolbar', $wpa_widget_toolbar );			
-			update_option('wpa_toolbar_gs', $wpa_toolbar_gs );
-			update_option('wpa_focus_color', $wpa_focus_color );
-			update_option('wpa_continue', $wpa_continue );
-			update_option('wpa_admin_css', $wpa_admin_css );
+			$wpa_image_titles = ( isset ( $_POST['wpa_image_titles'] ) ) ? 'on':'';
+			$wpa_more = ( isset ( $_POST['wpa_more'] ) ) ? 'on':'';
+			$wpa_focus = ( isset ( $_POST['wpa_focus'] ) ) ? 'on':'';
+			$wpa_focus_color = ( isset( $_POST['wpa_focus_color'] ) ) ? str_replace( '#', '', $_POST['wpa_focus_color'] ):'';
+			$wpa_continue = ( isset( $_POST['wpa_continue'] ) ) ? $_POST['wpa_continue']:'Continue Reading';
+			$wpa_toolbar = ( isset( $_POST['wpa_toolbar'] ) ) ? 'on':'';
+			$wpa_widget_toolbar = ( isset( $_POST['wpa_widget_toolbar'] ) ) ? 'on':'';
+			$wpa_toolbar_gs = ( isset( $_POST['wpa_toolbar_gs'] ) ) ? 'on':'';
+			$wpa_admin_css = ( isset( $_POST['wpa_admin_css'] ) ) ? 'on':'';
+			$wpa_row_actions = ( isset( $_POST['wpa_row_actions'] ) ) ? 'on' : '' ;
+			$wpa_diagnostics = ( isset( $_POST['wpa_diagnostics'] ) ) ? 'on' : '' ;
+			$wpa_insert_roles = ( isset( $_POST['wpa_insert_roles'] ) ) ? 'on' : '' ;
+			$wpa_complementary_container = ( isset( $_POST['wpa_complementary_container'] ) ) ? str_replace( '#', '', $_POST['wpa_complementary_container'] ) : '' ;
+			update_option( 'wpa_lang', $wpa_lang );
+			update_option( 'wpa_target', $wpa_target );
+			update_option( 'wpa_search', $wpa_search );
+			update_option( 'wpa_tabindex', $wpa_tabindex );
+			update_option( 'wpa_underline', $wpa_underline );
+			update_option( 'wpa_longdesc', $wpa_longdesc );
+			update_option( 'wpa_image_titles', $wpa_image_titles );
+			update_option( 'wpa_more', $wpa_more );
+			update_option( 'wpa_focus', $wpa_focus );
+			update_option( 'wpa_toolbar', $wpa_toolbar );
+			update_option( 'wpa_widget_toolbar', $wpa_widget_toolbar );			
+			update_option( 'wpa_toolbar_gs', $wpa_toolbar_gs );
+			update_option( 'wpa_focus_color', $wpa_focus_color );
+			update_option( 'wpa_continue', $wpa_continue );
+			update_option( 'wpa_admin_css', $wpa_admin_css );
 			update_option( 'wpa_row_actions', $wpa_row_actions );
-			update_option('wpa_diagnostics', $wpa_diagnostics );
+			update_option( 'wpa_diagnostics', $wpa_diagnostics );
+			update_option( 'wpa_insert_roles', $wpa_insert_roles );
+			update_option( 'wpa_complementary_container', $wpa_complementary_container );
 			$message = __("Miscellaneous Accessibility Settings Updated",'wp-accessibility');
 			return "<div class='updated'><p>".$message."</p></div>";
 		}
@@ -677,7 +687,7 @@ function wpa_admin_menu() { ?>
 			</div>
 			
 			<div class="postbox">
-				<h3 id="contrast"><?php _e('Miscellaneous Accessibility Settings','wp-accessibility'); ?></h3>
+				<h3 id="contrast"><?php _e( 'Miscellaneous Accessibility Settings','wp-accessibility' ); ?></h3>
 				<div class="inside">	
 				<form method="post" action="<?php echo admin_url('options-general.php?page=wp-accessibility/wp-accessibility.php'); ?>">
 				<fieldset>
@@ -686,7 +696,8 @@ function wpa_admin_menu() { ?>
 						<li><input type="checkbox" id="wpa_lang" name="wpa_lang" <?php if ( get_option('wpa_lang') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_lang"><?php _e('Add Site Language and text direction to HTML element','wp-accessibility'); ?></label></li>
 						<li><input type="checkbox" id="wpa_target" name="wpa_target" <?php if ( get_option('wpa_target') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_target"><?php _e('Remove target attribute from links','wp-accessibility'); ?></label></li>
 						<li><input type="checkbox" id="wpa_search" name="wpa_search" <?php if ( get_option('wpa_search') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_search"><?php _e('Force search error on empty search submission (theme must have search.php template)','wp-accessibility'); ?></label></li>
-						<li><input type="checkbox" id="wpa_tabindex" name="wpa_tabindex" <?php if ( get_option('wpa_tabindex') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_tabindex"><?php _e('Remove tabindex from focusable elements','wp-accessibility'); ?></label></li>
+						<li><input type="checkbox" id="wpa_tabindex" name="wpa_tabindex" <?php if ( get_option('wpa_tabindex') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_tabindex"><?php _e('Remove tabindex from focusable elements','wp-accessibility'); ?></label></li>					
+						<li><input type="checkbox" id="wpa_underline" name="wpa_underline" <?php if ( get_option('wpa_underline') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_underline"><?php _e('Force underline on all links','wp-accessibility'); ?></label></li>
 						<li><label for="wpa_longdesc"><?php _e('Long Description UI','wp-accessibility'); ?></label> <select id="wpa_longdesc" name="wpa_longdesc">
 							<option value='link'<?php if ( get_option('wpa_longdesc') == "link") { echo 'selected="selected" '; } ?>><?php _e('Link to description','wp-accessibility'); ?></option>
 							<option value='jquery'<?php if ( get_option('wpa_longdesc') == "jquery") { echo 'selected="selected" '; } ?>><?php _e('Button trigger to overlay image','wp-accessibility'); ?></option>
@@ -699,10 +710,11 @@ function wpa_admin_menu() { ?>
 						<li><input type="checkbox" id="wpa_toolbar" name="wpa_toolbar" <?php if ( get_option('wpa_toolbar') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_toolbar"><?php _e('Add Accessibility toolbar with fontsize adjustment and contrast toggle','wp-accessibility'); ?></label></li>
 						<li><input type="checkbox" id="wpa_widget_toolbar" name="wpa_widget_toolbar" <?php if ( get_option('wpa_widget_toolbar') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_widget_toolbar"><?php _e('Support Accessibility toolbar as shortcode or widget','wp-accessibility'); ?></label></li>		
 						<li><input type="checkbox" id="wpa_toolbar_gs" name="wpa_toolbar_gs" <?php if ( get_option('wpa_toolbar_gs') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_toolbar_gs"><?php _e('Include grayscale toggle with Accessibility toolbar','wp-accessibility'); ?></label></li>
-						<li><input type="checkbox" id="wpa_diagnostics" name="wpa_diagnostics" <?php if ( get_option('wpa_diagnostics') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_diagnostics"><?php _e('Enable diagnostic CSS','wp-accessibility'); ?></label></li>								
+						<li><input type="checkbox" id="wpa_diagnostics" name="wpa_diagnostics" <?php if ( get_option('wpa_diagnostics') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_diagnostics"><?php _e('Enable diagnostic CSS','wp-accessibility'); ?></label></li>		
 						<li><input type="checkbox" id="wpa_more" name="wpa_more" <?php if ( get_option('wpa_more') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_more"><?php _e('Add post title to "more" links.','wp-accessibility'); ?></label>
 							<label for="wpa_continue"><?php _e('Continue reading text','wp-accessibility'); ?></label> <input type="text" id="wpa_continue" name="wpa_continue" value="<?php echo esc_attr(get_option('wpa_continue') ); ?>" /></li>
-						<li><input type="checkbox" id="wpa_focus" name="wpa_focus" <?php if ( get_option('wpa_focus') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_focus"><?php _e('Add outline to elements on keyboard focus','wp-accessibility'); ?></label> <label for="wpa_focus_color"><?php _e('Outline color (hexadecimal, optional)','wp-accessibility' ); ?></label><input type="text" id="wpa_focus_color" name="wpa_focus_color" value="#<?php echo esc_attr(get_option('wpa_focus_color') ); ?>" /></li>					
+						<li><input type="checkbox" id="wpa_focus" name="wpa_focus" <?php if ( get_option('wpa_focus') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_focus"><?php _e('Add outline to elements on keyboard focus','wp-accessibility'); ?></label> <label for="wpa_focus_color"><?php _e('Outline color (hexadecimal, optional)','wp-accessibility' ); ?></label><input type="text" id="wpa_focus_color" name="wpa_focus_color" value="#<?php echo esc_attr(get_option('wpa_focus_color') ); ?>" /></li>
+						<li><input type="checkbox" id="wpa_insert_roles" name="wpa_insert_roles" <?php if ( get_option('wpa_insert_roles') == "on") { echo 'checked="checked" '; } ?>/> <label for="wpa_insert_roles"><?php _e('Add landmark roles to HTML5 structural elements','wp-accessibility'); ?></label><br /><label for="wpa_complementary_container"><?php _e('ID for complementary role','wp-accessibility' ); ?></label><input type="text" id="wpa_complementary_container" name="wpa_complementary_container" value="#<?php echo esc_attr( get_option( 'wpa_complementary_container' ) ); ?>" /></li>						
 					</ul>
 				</fieldset>
 					<p>
@@ -1046,7 +1058,13 @@ $plugins_string
 		$has_read_faq = ( $_POST['has_read_faq'] == 'on')?"Read FAQ":false;
 		$subject = "WP Accessibility support request. $has_donated";
 		$message = $request ."\n\n". $data;
-		$from = "From: \"$current_user->display_name\" <$current_user->user_email>\r\n";
+		// Get the site domain and get rid of www. from pluggable.php
+		$sitename = strtolower( $_SERVER['SERVER_NAME'] );
+		if ( substr( $sitename, 0, 4 ) == 'www.' ) {
+				$sitename = substr( $sitename, 4 );
+		}
+		$from_email = 'wordpress@' . $sitename;		
+		$from = "From: \"$current_user->display_name\" <$from_email>\r\nReply-to: \"$current_user->display_name\" <$current_user->user_email>\r\n";
 
 		if ( !$has_read_faq ) {
 			echo "<div class='message error'><p>".__('Please read the FAQ and other Help documents before making a support request.','wp-accessibility')."</p></div>";

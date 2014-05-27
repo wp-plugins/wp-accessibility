@@ -49,7 +49,7 @@ jQuery(document).ready(function($) {
 			return false;
 		}
 	});
-	var a11y_stylesheet_path = $('.a11y_stylesheet_path').html();
+	//var a11y_stylesheet_path = $('.a11y_stylesheet_path').html();
 	// Contrast handler
 	if (readCookie('a11y-high-contrast')) {
 		$('body').addClass('contrast');

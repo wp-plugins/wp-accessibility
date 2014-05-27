@@ -15,7 +15,7 @@ This plug-in helps with a variety of common accessibility problems in WordPress 
 
 All features can be disabled according to your theme's needs. For advanced users, all of the functions based on modifying stylesheets can be customized using your own custom styles by placing the appropriate stylesheet in your theme directory.
 
-Accessibility Features added by WP Accessibility:
+= Accessibility Features added by WP Accessibility: =
 
 * Enable skip links with WebKit support by adding JavaScript support to move keyboard focus.
 * Add skip links with user-defined targets. (Customizable targets and appearance.)
@@ -24,7 +24,7 @@ Accessibility Features added by WP Accessibility:
 * Add a toolbar toggling between high contrast, large print, and desaturated (grayscale) views of your theme.
 * Add a long description to images. Use the image's "Description" field to add long descriptions.
 
-Accessibility Issues fixed by WP Accessibility: 
+= Accessibility Issues fixed by WP Accessibility: =
 
 * Remove the target attribute from links.
 * Force a search page error when a search is made with an empty text string. (If your theme has a search.php template.)
@@ -34,7 +34,7 @@ Accessibility Issues fixed by WP Accessibility:
 * Add post titles to standard "read more" links.
 * Address some accessibility issues in the WordPress admin styles
 
-Accessibility Tools built into WP Accessibility: 
+= Accessibility Tools built into WP Accessibility: =
 
 * Show the color contrast between two provided hexadecimal color values.
 * Enable diagnostic CSS to show CSS-detectable problems in visual editor or on front-end of site. 
@@ -46,7 +46,7 @@ The plug-in is intended to help with deficiencies commonly found in themes and t
 Translating my plug-ins is always appreciated. Visit <a href="http://translate.joedolson.com">my translations site</a> to start getting your language into shape!
 
 Available languages (in order of completeness):
-Romanian, Dutch, French, Spanish, Italian, German, Polish, Finnish
+Portuguese (Portugal), Romanian, Dutch, French, Spanish, Italian, German, Polish, Finnish
 
 Visit the [WP Accessibility translations site](http://translate.joedolson.com/projects/wp-accessibility/) to check the progress of a translation.
 
@@ -58,7 +58,18 @@ Visit the [WP Accessibility translations site](http://translate.joedolson.com/pr
 
 == Changelog ==
 
+= 1.3.2 =
+
+* Feature: Check for HTML5 structural elements and insert ARIA landmark roles.
+* Feature: Define ID of container to use for complementary role. 
+* Feature: Add styles to make placeholder text high-contrast in high-contrast stylesheet.
+* Feature: Add option to force underlines on links
+* Bug fix: use reply-to header in email support requests
+* Bug fix: proper variable set up for high contrast stylesheet path
+* Language: Add Portuguese (Portugal)
+
 = 1.3.1 =
+
 * Emended a JS comment that some plug-ins were treating as a node...
 * Updated .pot file with long description strings.
 * Bug fix: longdesc attribute added even if description field empty.
