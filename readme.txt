@@ -46,7 +46,7 @@ The plug-in is intended to help with deficiencies commonly found in themes and t
 Translating my plug-ins is always appreciated. Visit <a href="http://translate.joedolson.com">my translations site</a> to start getting your language into shape!
 
 Available languages (in order of completeness):
-Portuguese (Portugal), Italian, Romanian, Dutch, French, Spanish, German, Polish, Finnish
+Greek, Portuguese (Portugal), Italian, Romanian, Dutch, French, Spanish, German, Polish, Finnish, Hebrew
 
 Visit the [WP Accessibility translations site](http://translate.joedolson.com/projects/wp-accessibility/) to check the progress of a translation.
 
@@ -54,9 +54,16 @@ Visit the [WP Accessibility translations site](http://translate.joedolson.com/pr
 
 1. Download the plugin's zip file, extract the contents, and upload them to your wp-content/plugins folder.
 2. Login to your WordPress dashboard, click "Plugins", and activate WP Accessibility.
-2. Customise your settings on the Settings > WP Accessibility page.
+3. Customise your settings on the Settings > WP Accessibility page.
 
 == Changelog ==
+
+= 1.3.4 =
+
+* Bug fix: Only enqueue stylesheets when settings require them.
+* Bug fix: Search filter should only be applied on front-end
+* Add SVG filter to provide grayscaling in Firefox
+* Add Languages: Hebrew, Greek
 
 = 1.3.3 =
 

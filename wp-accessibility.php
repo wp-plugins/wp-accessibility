@@ -3,7 +3,7 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/articles/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.3.3
+Version: 1.3.4
 Author: Joe Dolson
 Author URI: http://www.joedolson.com/
 
@@ -36,7 +36,7 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.3.3';
+	$wpa_version = '1.3.4';
 	if ( get_option('wpa_installed') != 'true' ) {
 		add_option( 'rta_from_nav_menu', 'on' );
 		add_option( 'rta_from_page_lists', 'on' );
@@ -191,7 +191,7 @@ function wpa_toolbar_html() {
 	$contrast = __('Toggle High Contrast','wp-accessibility');
 	$grayscale = __('Toggle Grayscale','wp-accessibility');
 	$fontsize = __('Toggle Font size','wp-accessibility');
-	$enable_grayscale = ( get_option('wpa_toolbar_gs') == 'on' )?true:false;	
+	$enable_grayscale = ( get_option('wpa_toolbar_gs') == 'on' )?true:false;
 	$toolbar = '
 <!-- a11y toolbar widget -->
 <div class="a11y-toolbar-widget">
@@ -335,9 +335,14 @@ function wpa_logout_item($admin_bar){
 function wpa_stylesheet() {
 	// Respects SSL, Style.css is relative to the current file
 	wp_register_style( 'wpa-style', plugins_url('wpa-style.css', __FILE__) );
-	wp_enqueue_style( 'wpa-style' );
 	wp_register_style( 'ui-a11y.css', plugins_url( 'toolbar/css/a11y.css', __FILE__) );
-	wp_enqueue_style( 'ui-a11y.css' );
+	// only enable styles when required by options
+	if ( get_option( 'wpa_longdesc' ) == 'on' || get_option( 'asl_enable' ) == 'on' ) {
+		wp_enqueue_style( 'wpa-style' );
+	}
+	if ( get_option( 'wpa_toolbar' ) == 'on' ) {
+		wp_enqueue_style( 'ui-a11y.css' );
+	}
 	if ( current_user_can( 'edit_files' ) && get_option('wpa_diagnostics') == 'on' ) {
 		wp_register_style( 'diagnostic', plugins_url('diagnostic.css', __FILE__) );
 		wp_register_style( 'diagnostic-head', plugins_url('diagnostic-head.css', __FILE__) );
@@ -556,10 +561,12 @@ if ( get_option('wpa_search') == 'on' ) {
 	add_filter('pre_get_posts','wpa_filter');
 }
 function wpa_filter($query) {
-	if ( isset($_GET['s']) && $_GET['s'] == '' ) { 
-		$query->query_vars['s'] = '&#32;';
-		$query->set( 'is_search', 1 );
-		add_action('template_redirect','wpa_search_error');
+	if ( !is_admin() ) {
+		if ( isset($_GET['s']) && $_GET['s'] == '' ) { 
+			$query->query_vars['s'] = '&#32;';
+			$query->set( 'is_search', 1 );
+			add_action('template_redirect','wpa_search_error');
+		}
 	}
 	return $query;
 }
@@ -1094,7 +1101,7 @@ $plugins_string
 		<code>".__('From:','wp-accessibility')." \"$current_user->display_name\" &lt;$current_user->user_email&gt;</code>
 		</p>
 		<p>
-		<input type='checkbox' name='has_read_faq' id='has_read_faq' value='on' /> <label for='has_read_faq'>".sprintf(__('I have read <a href="%1$s">the FAQ for this plug-in</a> <span>(required)</span>','wp-accessibility'),'http://www.joedolson.com/articles/wp-accessibility/faqs/')."</label>
+		<input type='checkbox' name='has_read_faq' id='has_read_faq' value='on' /> <label for='has_read_faq'>".sprintf( __('I have read <a href="%1$s">the FAQ for this plug-in</a> <span>(required)</span>','wp-accessibility'),'http://www.joedolson.com/articles/wp-accessibility/faqs/')."</label>
         </p>
         <p>
         <input type='checkbox' name='has_donated' id='has_donated' value='on' /> <label for='has_donated'>".sprintf(__('I have <a href="%1$s">made a donation to help support this plug-in</a>','wp-accessibility'),'http://www.joedolson.com/donate.php')."</label>
