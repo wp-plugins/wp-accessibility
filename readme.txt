@@ -7,7 +7,7 @@ Tested up to: 3.9.1
 Stable tag: 1.3.4
 License: GPLv2 or later
 
-WP Accessibility provides fixes for common accessibility issues in your WordPress site.
+WP Accessibility fixes common accessibility issues in your WordPress site.
 
 == Description ==
 
@@ -57,6 +57,11 @@ Visit the [WP Accessibility translations site](http://translate.joedolson.com/pr
 3. Customise your settings on the Settings > WP Accessibility page.
 
 == Changelog ==
+
+= 1.3.5 =
+
+* Bug fix: Toolbar shortcode didn't toggle Grayscale or Fontsize
+* Documentation: Add documentation of shortcode/widget toolbar.
 
 = 1.3.4 =
 

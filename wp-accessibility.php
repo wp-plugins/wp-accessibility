@@ -3,7 +3,7 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/articles/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.3.4
+Version: 1.3.5
 Author: Joe Dolson
 Author URI: http://www.joedolson.com/
 
@@ -36,7 +36,7 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.3.4';
+	$wpa_version = '1.3.5';
 	if ( get_option('wpa_installed') != 'true' ) {
 		add_option( 'rta_from_nav_menu', 'on' );
 		add_option( 'rta_from_page_lists', 'on' );
@@ -340,7 +340,7 @@ function wpa_stylesheet() {
 	if ( get_option( 'wpa_longdesc' ) == 'on' || get_option( 'asl_enable' ) == 'on' ) {
 		wp_enqueue_style( 'wpa-style' );
 	}
-	if ( get_option( 'wpa_toolbar' ) == 'on' ) {
+	if ( get_option( 'wpa_toolbar' ) == 'on' || get_option( 'wpa_widget_toolbar' ) == 'on' ) {
 		wp_enqueue_style( 'ui-a11y.css' );
 	}
 	if ( current_user_can( 'edit_files' ) && get_option('wpa_diagnostics') == 'on' ) {
@@ -873,6 +873,9 @@ if ( $l_contrast ) {
 					</p>
 					<p>
 					<?php _e('Define a custom long description template by adding the template "longdesc-template.php" to your theme directory.','wp-accessibility' ); ?>
+					</p>
+					<p>
+					<?php _e('The <a href="#wpa_widget_toolbar">shortcode for the Accessibility toolbar</a> (if enabled) is <code>[wpa_toolbar]</code>','wp-accessibility' ); ?>
 					</p>					
 				</div>
 			</div>
