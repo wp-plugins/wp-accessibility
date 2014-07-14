@@ -120,6 +120,29 @@ fieldset p {
 	overflow: hidden;
 }
 
+/* a11y toolbar RTL */
+.a11y-toolbar.rtl {
+right: 0;
+left: auto;
+}
+
+.a11y-toolbar.rtl ul {
+border-top-left-radius: 4px;
+border-bottom-left-radius: 4px;
+border-top-right-radius: 0;
+border-bottom-right-radius: 0;
+}
+
+.a11y-toolbar.rtl ul li:first-child a {
+border-top-left-radius: 4px;
+border-top-right-radius: 0;
+}
+
+.a11y-toolbar.rtl ul li:last-child a {
+border-bottom-left-radius: 4px;
+border-bottom-right-radius: 0;
+}
+
 .desaturated {
 	filter: grayscale(100%)!important;
 	-webkit-filter: grayscale(100%)!important;

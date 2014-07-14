@@ -58,6 +58,11 @@ Visit the [WP Accessibility translations site](http://translate.joedolson.com/pr
 
 == Changelog ==
 
+= 1.3.6 =
+
+* Bug fix: When disabled, lang toggle removed language from HTML element
+* Add RTL styles for a11y toolbar.
+
 = 1.3.5 =
 
 * Bug fix: Toolbar shortcode didn't toggle Grayscale or Fontsize

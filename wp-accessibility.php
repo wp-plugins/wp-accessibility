@@ -3,7 +3,7 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/articles/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.3.5
+Version: 1.3.6
 Author: Joe Dolson
 Author URI: http://www.joedolson.com/
 
@@ -213,13 +213,14 @@ function wpa_toolbar_js() {
 	$fontsize = __('Toggle Font size','wp-accessibility');
 	$enable_grayscale = ( get_option('wpa_toolbar_gs') == 'on' )?true:false;
 	$location = apply_filters( 'wpa_move_toolbar', 'body' );
+	$is_rtl = ( is_rtl() ) ? ' rtl' : ' ltr' ;
 echo	
 	"
 <script type='text/javascript'>
 //<![CDATA[
 	(function( $ ) { 'use strict';
 		var insert_a11y_toolbar = '<!-- a11y toolbar -->';
-		insert_a11y_toolbar += '<div class=\"a11y-toolbar\">';
+		insert_a11y_toolbar += '<div class=\"a11y-toolbar$is_rtl\">';
 		insert_a11y_toolbar += '<ul>';
 		insert_a11y_toolbar += '<li><a href=\"#\" class=\"a11y-toggle-contrast toggle-contrast\" id=\"is_normal_contrast\" title=\"$contrast\"><span class=\"offscreen\">$contrast</span><i class=\"icon icon-adjust\"></i></a></li>';";
 		if ( get_option( 'wpa_toolbar' ) == 'on' && $enable_grayscale ) {
@@ -294,9 +295,11 @@ function wpa_jquery_asl() {
 	$output = ($html != '')?"<div class=\"$visibility$is_rtl\" id=\"skiplinks\" role=\"navigation\">$html</div>":'';
 	$skiplinks_js = ( $output )?"$('body').prepend('$output');":'';
 	// attach language to html element
-	$lang = ( get_option( 'wpa_lang' ) == 'on' )?get_bloginfo('language'):false;
-	$dir = ( get_option( 'wpa_lang' ) == 'on' )?get_bloginfo('text_direction'):false;
-	$lang_js = "$('html').attr('lang','$lang'); $('html').attr('dir','$dir')";
+	if ( get_option( 'wpa_lang' ) == 'on' ) {
+		$lang = get_bloginfo('language');
+		$dir = get_bloginfo('text_direction');
+		$lang_js = "$('html').attr('lang','$lang'); $('html').attr('dir','$dir')";
+	}
 	// force links to open in the same window
 	$targets = ( get_option( 'wpa_target' ) == 'on' ) ? "$('a').removeAttr('target');":'';
 	$tabindex = ( get_option( 'wpa_tabindex') == 'on' ) ? "$('input,a,select,textarea,button').removeAttr('tabindex');":'';
