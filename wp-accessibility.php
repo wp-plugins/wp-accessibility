@@ -3,7 +3,7 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/articles/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.3.6
+Version: 1.3.7
 Author: Joe Dolson
 Author URI: http://www.joedolson.com/
 
@@ -36,7 +36,7 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.3.5';
+	$wpa_version = '1.3.7';
 	if ( get_option('wpa_installed') != 'true' ) {
 		add_option( 'rta_from_nav_menu', 'on' );
 		add_option( 'rta_from_page_lists', 'on' );
@@ -54,11 +54,11 @@ function wpa_install() {
 		add_option( 'wpa_continue','Continue Reading' );
 		add_option( 'wpa_focus', '' );
 		add_option( 'wpa_installed', 'true' );
-		add_option( 'wpa_version', $version );	
+		add_option( 'wpa_version', $wpa_version );	
 		add_option( 'wpa_longdesc', 'jquery' );
 	} else {
 		wpa_check_version();
-		update_option( 'wpa_version', $version );
+		update_option( 'wpa_version', $wpa_version );
 	}
 }
 
@@ -277,23 +277,25 @@ function wpa_is_url($url) {
 
 function wpa_jquery_asl() {		
 	$skiplinks_js = $targets = $lang_js = $tabindex = $longdesc = false;
-	$content = str_replace( '#','',esc_attr( get_option('asl_content') ) );
 	$visibility = ( get_option( 'asl_visible' ) == 'on' )?'wpa-visible':'wpa-hide';
-	$nav = str_replace( '#','',esc_attr( get_option('asl_navigation') ) );
-	$sitemap = esc_url( get_option( 'asl_sitemap' ) );
-	$extra = get_option( 'asl_extra_target' );
-	$extra = ( wpa_is_url($extra) )?esc_url($extra):str_replace('#','',esc_attr( $extra ));
-	if ( $extra != '' && !wpa_is_url($extra) ) { $extra = "#$extra"; }
-	$extra_text = stripslashes(get_option( 'asl_extra_text' ));
-	$html = '';
-	// set up skiplinks
-	$html .= ( $content != '' )?"<a href=\"#$content\">".__('Skip to content','wp-accessibility')."</a> ":'';
-	$html .= ( $nav != '' )?"<a href=\"#$nav\">".__('Skip to navigation','wp-accessibility')."</a> ":'';
-	$html .= ( $sitemap != '' )?"<a href=\"$sitemap\">".__('Site map','wp-accessibility')."</a> ":'';
-	$html .= ( $extra != '' && $extra_text != '' )?"<a href=\"$extra\">$extra_text</a> ":'';
-	$is_rtl = ( is_rtl() ) ? '-rtl' : '-ltr' ;
-	$output = ($html != '')?"<div class=\"$visibility$is_rtl\" id=\"skiplinks\" role=\"navigation\">$html</div>":'';
-	$skiplinks_js = ( $output )?"$('body').prepend('$output');":'';
+	if ( get_option( 'asl_enable' ) == 'on' ) {
+		$html = '';
+		// set up skiplinks
+		$extra = get_option( 'asl_extra_target' );
+		$extra = ( wpa_is_url($extra) )?esc_url($extra):str_replace('#','',esc_attr( $extra ));
+		if ( $extra != '' && !wpa_is_url($extra) ) { $extra = "#$extra"; }
+		$extra_text = stripslashes(get_option( 'asl_extra_text' ));		
+		$content = str_replace( '#','',esc_attr( get_option('asl_content') ) );	
+		$nav = str_replace( '#','',esc_attr( get_option('asl_navigation') ) );
+		$sitemap = esc_url( get_option( 'asl_sitemap' ) );		
+		$html .= ( $content != '' )?"<a href=\"#$content\">".__('Skip to content','wp-accessibility')."</a> ":'';
+		$html .= ( $nav != '' )?"<a href=\"#$nav\">".__('Skip to navigation','wp-accessibility')."</a> ":'';
+		$html .= ( $sitemap != '' )?"<a href=\"$sitemap\">".__('Site map','wp-accessibility')."</a> ":'';
+		$html .= ( $extra != '' && $extra_text != '' )?"<a href=\"$extra\">$extra_text</a> ":'';
+		$is_rtl = ( is_rtl() ) ? '-rtl' : '-ltr' ;
+		$output = ($html != '')?"<div class=\"$visibility$is_rtl\" id=\"skiplinks\" role=\"navigation\">$html</div>":'';
+		$skiplinks_js = ( $output )?"$('body').prepend('$output');":'';
+	}
 	// attach language to html element
 	if ( get_option( 'wpa_lang' ) == 'on' ) {
 		$lang = get_bloginfo('language');
@@ -872,7 +874,7 @@ if ( $l_contrast ) {
 					<?php _e('It is almost impossible for the Accessibility Toolbar to guarantee a good result for large text or high contrast modes. Author your own high-contrast styles by placing a stylesheet called <code>a11y-contrast.css</code> in your Theme\'s stylesheet directory.','wp-accessibility'); ?>
 					</p>
 					<p>
-					<?php _e('Define custom styles for large print by asssigning them in the body class <code>.fontsize</code> in your theme stylesheet.','wp-accessibility' ); ?>
+					<?php _e('Define custom styles for large print by assigning them in the body class <code>.fontsize</code> in your theme stylesheet.','wp-accessibility' ); ?>
 					</p>
 					<p>
 					<?php _e('Define a custom long description template by adding the template "longdesc-template.php" to your theme directory.','wp-accessibility' ); ?>
@@ -1010,20 +1012,12 @@ get_currentuserinfo();
 	$php_version = phpversion();
 	
 	// theme data
-	if ( function_exists( 'wp_get_theme' ) ) {
 	$theme = wp_get_theme();
-		$theme_name = $theme->Name;
-		$theme_uri = $theme->ThemeURI;
-		$theme_parent = $theme->Template;
-		$theme_version = $theme->Version;	
-	} else {
-	$theme_path = get_stylesheet_directory().'/style.css';
-	$theme = get_theme_data($theme_path);
-		$theme_name = $theme['Name'];
-		$theme_uri = $theme['ThemeURI'];
-		$theme_parent = $theme['Template'];
-		$theme_version = $theme['Version'];
-	}
+	$theme_name = $theme->Name;
+	$theme_uri = $theme->ThemeURI;
+	$theme_parent = $theme->Template;
+	$theme_version = $theme->Version;	
+
 	// plugin data
 	$plugins = get_plugins();
 	$plugins_string = '';

@@ -58,6 +58,19 @@ Visit the [WP Accessibility translations site](http://translate.joedolson.com/pr
 
 == Changelog ==
 
+= 1.4.0 =
+
+These are potential future features.
+
+* Auto configuration of settings based on Tenon results. (Whoa. Can I do that?)
+* Front End Tenon reporting
+* Provide ability for themes to pass default settings within that theme.
+
+= 1.3.7 =
+
+* Typo fixed.
+* Bug fix: If any skiplink field was filled in, skiplinks automatically displayed. 
+
 = 1.3.6 =
 
 * Bug fix: When disabled, lang toggle removed language from HTML element
