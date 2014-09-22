@@ -4,7 +4,7 @@ Donate link: http://www.joedolson.com/donate.php
 Tags: title, accessibility, accessible, navigation, wcag, a11y, section508, focus
 Requires at least: 3.4.2
 Tested up to: 4.0
-Stable tag: 1.3.7
+Stable tag: 1.3.8
 License: GPLv2 or later
 
 WP Accessibility fixes common accessibility issues in your WordPress site.
