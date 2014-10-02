@@ -46,7 +46,7 @@ The plug-in is intended to help with deficiencies commonly found in themes and t
 Translating my plug-ins is always appreciated. Visit <a href="http://translate.joedolson.com">my translations site</a> to start getting your language into shape!
 
 Available translations (in order of completeness):
-Dutch, French, Greek, Portuguese (Portugal), Italian, Romanian, German, Spanish, Polish, Russian, Slovenian, Hebrew, Finnish
+Finnish, French, Dutch, Greek, Portuguese (Portugal), Italian, Romanian, German, Russian, Spanish, Polish, Slovenian, Hebrew, Bulgarian
 
 Visit the [WP Accessibility translations site](http://translate.joedolson.com/projects/wp-accessibility/) to check the progress of a translation.
 
@@ -65,6 +65,12 @@ These are potential future features.
 * Auto configuration of settings based on Tenon results. (Whoa. Can I do that?)
 * Front End Tenon reporting
 * Provide ability for themes to pass default settings within that theme.
+
+= 1.3.9 =
+
+* Bug fix: skiplinks JS targeting
+* Bug fix: incorrect textdomain in longdesc template
+* Update or add translations: Dutch, French, Finnish, Russian, Bulgarian
 
 = 1.3.8 =
 
