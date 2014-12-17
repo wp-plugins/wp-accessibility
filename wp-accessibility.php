@@ -3,7 +3,7 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.3.9
+Version: 1.3.10
 Author: Joe Dolson
 Text Domain: wp-accessibility
 Author URI: http://www.joedolson.com/
@@ -37,7 +37,7 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.3.9';
+	$wpa_version = '1.3.10';
 	if ( get_option( 'wpa_installed' ) != 'true' ) {
 		add_option( 'rta_from_nav_menu', 'on' );
 		add_option( 'rta_from_page_lists', 'on' );
@@ -140,7 +140,7 @@ function wpa_register_scripts() {
 	wp_register_script( 'scrollTo', plugins_url( 'wp-accessibility/toolbar/js/jquery.scrollto.min.js' ), array( 'jquery' ), '1.4.5', true );
 }
 
-add_action( 'wp_footer', 'wpa_jquery_asl' );
+add_action( 'wp_footer', 'wpa_jquery_asl', 100 );
 add_action( 'wp_enqueue_scripts', 'wpa_enqueue_scripts' );
 add_action( 'wp_head', 'wpa_css' );
 add_action( 'wp_enqueue_scripts', 'wpa_core_scripts' );
@@ -717,14 +717,17 @@ function wpa_admin_menu() {
 				<h3><?php _e( 'Remove Title Attributes', 'wp-accessibility' ); ?></h3>
 
 				<div class="inside">
+					<p>
+						<?php _e( 'As of WordPress 4.0, the only globally added title attributes are in the WordPress tag cloud, showing the number of posts with that tag, and on the categories list, if the category has a term description.', 'wp-accessibility' ); ?>
+					</p>
 					<form method="post"
 					      action="<?php echo admin_url( 'options-general.php?page=wp-accessibility/wp-accessibility.php' ); ?>">
 						<fieldset>
 							<legend><?php _e( 'Remove title attributes from:', 'wp-accessibility' ); ?></legend>
 							<ul>
+								<?php if ( version_compare( get_bloginfo( 'version' ), '3.8', '<' ) ) { ?>
 								<li>
-									<input <?php echo ( version_compare( get_bloginfo( 'version' ), '3.8', '>=' ) ) ? 'disabled="disabled"' : ''; ?>
-										type="checkbox" id="rta_from_nav_menu"
+									<input type="checkbox" id="rta_from_nav_menu"
 										name="rta_from_nav_menu" <?php if ( get_option( 'rta_from_nav_menu' ) == "on" ) {
 										echo 'checked="checked" ';
 									} ?>/> <label
@@ -732,35 +735,15 @@ function wpa_admin_menu() {
 										(<?php echo ( version_compare( get_bloginfo( 'version' ), '3.8', '>=' ) ) ? __( 'Obsolete since WordPress 3.8', 'wp-accessibility' ) : ''; ?>
 										)</label></li>
 								<li>
-									<input <?php echo ( version_compare( get_bloginfo( 'version' ), '3.8', '>=' ) ) ? 'disabled="disabled"' : ''; ?>
-										type="checkbox" id="rta_from_page_lists"
+									<input type="checkbox" id="rta_from_page_lists"
 										name="rta_from_page_lists" <?php if ( get_option( 'rta_from_page_lists' ) == "on" ) {
 										echo 'checked="checked" ';
 									} ?>/> <label
 										for="rta_from_page_lists"><?php _e( 'Page lists', 'wp-accessibility' ); ?>
 										(<?php echo ( version_compare( get_bloginfo( 'version' ), '3.8', '>=' ) ) ? __( 'Obsolete since WordPress 3.8', 'wp-accessibility' ) : ''; ?>
 										)</label></li>
-								<li><input type="checkbox" id="rta_from_category_lists"
-								           name="rta_from_category_lists" <?php if ( get_option( 'rta_from_category_lists' ) == "on" ) {
-										echo 'checked="checked" ';
-									} ?>/> <label
-										for="rta_from_category_lists"><?php _e( 'Category lists', 'wp-accessibility' ); ?></label>
-								</li>
-								<li><input type="checkbox" id="rta_from_archive_links"
-								           name="rta_from_archive_links" <?php if ( get_option( 'rta_from_archive_links' ) == "on" ) {
-										echo 'checked="checked" ';
-									} ?>/> <label
-										for="rta_from_archive_links"><?php _e( 'Archive links', 'wp-accessibility' ); ?></label>
-								</li>
-								<li><input type="checkbox" id="rta_from_tag_clouds"
-								           name="rta_from_tag_clouds" <?php if ( get_option( 'rta_from_tag_clouds' ) == "on" ) {
-										echo 'checked="checked" ';
-									} ?>/> <label
-										for="rta_from_tag_clouds"><?php _e( 'Tag clouds', 'wp-accessibility' ); ?></label>
-								</li>
 								<li>
-									<input <?php echo ( version_compare( get_bloginfo( 'version' ), '3.8', '>=' ) ) ? 'disabled="disabled"' : ''; ?>
-										type="checkbox" id="rta_from_category_links"
+									<input type="checkbox" id="rta_from_category_links"
 										name="rta_from_category_links" <?php if ( get_option( 'rta_from_category_links' ) == "on" ) {
 										echo 'checked="checked" ';
 									} ?>/> <label
@@ -768,8 +751,7 @@ function wpa_admin_menu() {
 										(<?php echo ( version_compare( get_bloginfo( 'version' ), '3.8', '>=' ) ) ? __( 'Obsolete since WordPress 3.8', 'wp-accessibility' ) : ''; ?>
 										)</label></li>
 								<li>
-									<input <?php echo ( version_compare( get_bloginfo( 'version' ), '3.8', '>=' ) ) ? 'disabled="disabled"' : ''; ?>
-										type="checkbox" id="rta_from_post_edit_links"
+									<input type="checkbox" id="rta_from_post_edit_links"
 										name="rta_from_post_edit_links" <?php if ( get_option( 'rta_from_post_edit_links' ) == "on" ) {
 										echo 'checked="checked" ';
 									} ?>/> <label
@@ -777,14 +759,35 @@ function wpa_admin_menu() {
 										(<?php echo ( version_compare( get_bloginfo( 'version' ), '3.8', '>=' ) ) ? __( 'Obsolete since WordPress 3.8', 'wp-accessibility' ) : ''; ?>
 										)</label></li>
 								<li>
-									<input <?php echo ( version_compare( get_bloginfo( 'version' ), '3.8', '>=' ) ) ? 'disabled="disabled"' : ''; ?>
-										type="checkbox" id="rta_from_edit_comment_links"
+									<input type="checkbox" id="rta_from_edit_comment_links"
 										name="rta_from_edit_comment_links" <?php if ( get_option( 'rta_from_edit_comment_links' ) == "on" ) {
 										echo 'checked="checked" ';
 									} ?>/> <label
 										for="rta_from_edit_comment_links"><?php _e( 'Edit comment links', 'wp-accessibility' ); ?>
 										(<?php echo ( version_compare( get_bloginfo( 'version' ), '3.8', '>=' ) ) ? __( 'Obsolete since WordPress 3.8', 'wp-accessibility' ) : ''; ?>
-										)</label></li>
+										)</label></li>	
+								<?php } ?>							
+								<?php if ( version_compare( get_bloginfo( 'version' ), '4.0', '<' ) ) { ?>								
+								<li><input type="checkbox" id="rta_from_category_lists"
+								           name="rta_from_category_lists" <?php if ( get_option( 'rta_from_category_lists' ) == "on" ) {
+										echo 'checked="checked" ';
+									} ?>/> <label
+										for="rta_from_category_lists"><?php _e( 'Category lists', 'wp-accessibility' ); ?></label>
+								</li>
+			
+								<?php } ?>
+								<li><input type="checkbox" id="rta_from_tag_clouds"
+								           name="rta_from_tag_clouds" <?php if ( get_option( 'rta_from_tag_clouds' ) == "on" ) {
+										echo 'checked="checked" ';
+									} ?>/> <label
+										for="rta_from_tag_clouds"><?php _e( 'Tag clouds', 'wp-accessibility' ); ?></label>
+								</li>
+								<li><input type="checkbox" id="rta_from_archive_links"
+								           name="rta_from_archive_links" <?php if ( get_option( 'rta_from_archive_links' ) == "on" ) {
+										echo 'checked="checked" ';
+									} ?>/> <label
+										for="rta_from_archive_links"><?php _e( 'Archive links', 'wp-accessibility' ); ?></label>
+								</li>	
 							</ul>
 						</fieldset>
 						<p>

@@ -3,7 +3,7 @@ Contributors: joedolson
 Donate link: http://www.joedolson.com/donate.php
 Tags: title, accessibility, accessible, navigation, wcag, a11y, section508, focus
 Requires at least: 3.4.2
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: 1.3.9
 License: GPLv2 or later
 
@@ -46,7 +46,7 @@ The plug-in is intended to help with deficiencies commonly found in themes and t
 Translating my plug-ins is always appreciated. Visit <a href="http://translate.joedolson.com">my translations site</a> to start getting your language into shape!
 
 Available translations (in order of completeness):
-Finnish, French, Dutch, Greek, Portuguese (Portugal), Italian, Romanian, German, Russian, Spanish, Polish, Slovenian, Hebrew, Bulgarian
+Dutch, Finnish, French, Bulgarian, Greek, Portuguese (Portugal), Italian, Russian, Romanian, German, Spanish, Polish, Hebrew, Slovenian
 
 Visit the [WP Accessibility translations site](http://translate.joedolson.com/projects/wp-accessibility/) to check the progress of a translation.
 
@@ -65,6 +65,12 @@ These are potential future features.
 * Auto configuration of settings based on Tenon results. (Whoa. Can I do that?)
 * Front End Tenon reporting
 * Provide ability for themes to pass default settings within that theme.
+
+= 1.3.10 =
+
+* Switch order in which skiplinks/accessibility toolbar are loaded into the DOM so skiplinks load last/appear first.
+* Hide fields for WordPress title attribute removal on versions where they don't apply. 
+* Language updates: Russian, Hebrew, Bulgarian
 
 = 1.3.9 =
 
