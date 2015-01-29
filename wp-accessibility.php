@@ -3,12 +3,12 @@
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/wp-accessibility/
 Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
-Version: 1.3.10
+Version: 1.3.11
 Author: Joe Dolson
 Text Domain: wp-accessibility
 Author URI: http://www.joedolson.com/
 
-    Copyright 2012-2014 Joe Dolson (joe@joedolson.com)
+    Copyright 2012-2015 Joe Dolson (joe@joedolson.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,10 +26,10 @@ Author URI: http://www.joedolson.com/
 */
 
 register_activation_hook( __FILE__, 'wpa_install' );
-add_action( 'admin_menu', 'add_wpa_admin_menu' );
 load_plugin_textdomain( 'wp-accessibility', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 
 // ADMIN MENU
+add_action( 'admin_menu', 'add_wpa_admin_menu' );
 function add_wpa_admin_menu() {
 	add_action( 'admin_print_footer_scripts', 'wpa_write_js' );
 	add_options_page( 'WP Accessibility', 'WP Accessibility', 'manage_options', __FILE__, 'wpa_admin_menu' );
@@ -37,7 +37,7 @@ function add_wpa_admin_menu() {
 
 // ACTIVATION
 function wpa_install() {
-	$wpa_version = '1.3.10';
+	$wpa_version = '1.3.11';
 	if ( get_option( 'wpa_installed' ) != 'true' ) {
 		add_option( 'rta_from_nav_menu', 'on' );
 		add_option( 'rta_from_page_lists', 'on' );
@@ -80,7 +80,7 @@ function wpa_plugin_action( $links, $file ) {
 }
 
 //Add Plugin Actions to WordPress
-add_filter( 'plugin_action_links', 'wpa_plugin_action', - 10, 2 );
+add_filter( 'plugin_action_links', 'wpa_plugin_action', 10, 2 );
 add_action( 'wp_enqueue_scripts', 'wpa_register_scripts' );
 add_action( 'admin_menu', 'wpa_javascript' );
 
@@ -134,7 +134,7 @@ function wpa_write_js() {
 }
 
 function wpa_register_scripts() {
-	// register jQuery script;
+	// register jQuery scripts;
 	wp_register_script( 'skiplinks.webkit', plugins_url( 'wp-accessibility/js/skiplinks.webkit.js' ) );
 	wp_register_script( 'ui-a11y.js', plugins_url( 'wp-accessibility/toolbar/js/a11y.js' ), array( 'jquery' ), '1.0', true );
 	wp_register_script( 'scrollTo', plugins_url( 'wp-accessibility/toolbar/js/jquery.scrollto.min.js' ), array( 'jquery' ), '1.4.5', true );
@@ -372,7 +372,7 @@ function wpa_stylesheet() {
 }
 </style>";
 	}
-	if ( get_option( 'wpa_longdesc' ) == 'on' || get_option( 'asl_enable' ) == 'on' ) {
+	if ( get_option( 'wpa_longdesc' ) == 'link' || get_option( 'wpa_longdesc' ) == 'jquery' || get_option( 'asl_enable' ) == 'on' ) {
 		wp_enqueue_style( 'wpa-style' );
 	}
 	if ( get_option( 'wpa_toolbar' ) == 'on' || get_option( 'wpa_widget_toolbar' ) == 'on' ) {
@@ -717,6 +717,7 @@ function wpa_admin_menu() {
 				<h3><?php _e( 'Remove Title Attributes', 'wp-accessibility' ); ?></h3>
 
 				<div class="inside">
+				<?php wpa_accessible_theme(); ?>
 					<p>
 						<?php _e( 'As of WordPress 4.0, the only globally added title attributes are in the WordPress tag cloud, showing the number of posts with that tag, and on the categories list, if the category has a term description.', 'wp-accessibility' ); ?>
 					</p>
@@ -801,10 +802,16 @@ function wpa_admin_menu() {
 				</div>
 			</div>
 
+
 			<div class="postbox">
 				<h3><?php _e( 'Add Skiplinks', 'wp-accessibility' ); ?></h3>
 
 				<div class="inside">
+					<?php if ( wpa_accessible_theme() && get_option( 'asl_enable' ) != 'on' ) { ?>
+						<p>
+							<?php _e( 'Your <code>accessibility-ready</code> theme has skip links built in.', 'wp-accessibility' ); ?>
+						</p>
+					<?php } else { ?>				
 					<form method="post"
 					      action="<?php echo admin_url( 'options-general.php?page=wp-accessibility/wp-accessibility.php' ); ?>">
 						<fieldset>
@@ -868,9 +875,9 @@ function wpa_admin_menu() {
 						<p><input type="submit" name="wpa-settings" class="button-primary"
 						          value="<?php _e( 'Update Skiplink Settings', 'wp-accessibility' ) ?>"/></p>
 					</form>
+					<?php } ?>					
 				</div>
 			</div>
-
 			<div class="postbox">
 				<h3 id="contrast"><?php _e( 'Miscellaneous Accessibility Settings', 'wp-accessibility' ); ?></h3>
 
@@ -880,12 +887,34 @@ function wpa_admin_menu() {
 						<fieldset>
 							<legend><?php _e( 'Miscellaneous', 'wp-accessibility' ); ?></legend>
 							<ul>
+								<?php if ( !wpa_accessible_theme() ) { ?>
 								<li><input type="checkbox" id="wpa_lang"
 								           name="wpa_lang" <?php if ( get_option( 'wpa_lang' ) == "on" ) {
 										echo 'checked="checked" ';
 									} ?>/> <label
 										for="wpa_lang"><?php _e( 'Add Site Language and text direction to HTML element', 'wp-accessibility' ); ?></label>
 								</li>
+								<li><input type="checkbox" id="wpa_more"
+								           name="wpa_more" <?php if ( get_option( 'wpa_more' ) == "on" ) {
+										echo 'checked="checked" ';
+									} ?>/> <label
+										for="wpa_more"><?php _e( 'Add post title to "more" links.', 'wp-accessibility' ); ?></label>
+									<label
+										for="wpa_continue"><?php _e( 'Continue reading text', 'wp-accessibility' ); ?></label>
+									<input type="text" id="wpa_continue" name="wpa_continue"
+									       value="<?php echo esc_attr( get_option( 'wpa_continue' ) ); ?>"/></li>
+										   								<li><input type="checkbox" id="wpa_insert_roles"
+								           name="wpa_insert_roles" <?php if ( get_option( 'wpa_insert_roles' ) == "on" ) {
+										echo 'checked="checked" ';
+									} ?>/> <label
+										for="wpa_insert_roles"><?php _e( 'Add landmark roles to HTML5 structural elements', 'wp-accessibility' ); ?></label><br/><label
+										for="wpa_complementary_container"><?php _e( 'ID for complementary role', 'wp-accessibility' ); ?></label><input
+										type="text" id="wpa_complementary_container" name="wpa_complementary_container"
+										value="#<?php echo esc_attr( get_option( 'wpa_complementary_container' ) ); ?>"/>
+								</li>
+								<?php } else { ?>
+									<li><?php _e( '<strong>Three disabled features:</strong> Site language, continue reading text, and landmark roles are defined by your <code>accessibility-ready</code> theme.', 'wp-accessibility' ); ?></li>
+								<?php } ?>
 								<li><input type="checkbox" id="wpa_target"
 								           name="wpa_target" <?php if ( get_option( 'wpa_target' ) == "on" ) {
 										echo 'checked="checked" ';
@@ -984,15 +1013,6 @@ function wpa_admin_menu() {
 									} ?>/> <label
 										for="wpa_diagnostics"><?php _e( 'Enable diagnostic CSS', 'wp-accessibility' ); ?></label>
 								</li>
-								<li><input type="checkbox" id="wpa_more"
-								           name="wpa_more" <?php if ( get_option( 'wpa_more' ) == "on" ) {
-										echo 'checked="checked" ';
-									} ?>/> <label
-										for="wpa_more"><?php _e( 'Add post title to "more" links.', 'wp-accessibility' ); ?></label>
-									<label
-										for="wpa_continue"><?php _e( 'Continue reading text', 'wp-accessibility' ); ?></label>
-									<input type="text" id="wpa_continue" name="wpa_continue"
-									       value="<?php echo esc_attr( get_option( 'wpa_continue' ) ); ?>"/></li>
 								<li><input type="checkbox" id="wpa_focus"
 								           name="wpa_focus" <?php if ( get_option( 'wpa_focus' ) == "on" ) {
 										echo 'checked="checked" ';
@@ -1002,15 +1022,6 @@ function wpa_admin_menu() {
 										for="wpa_focus_color"><?php _e( 'Outline color (hexadecimal, optional)', 'wp-accessibility' ); ?></label><input
 										type="text" id="wpa_focus_color" name="wpa_focus_color"
 										value="#<?php echo esc_attr( get_option( 'wpa_focus_color' ) ); ?>"/></li>
-								<li><input type="checkbox" id="wpa_insert_roles"
-								           name="wpa_insert_roles" <?php if ( get_option( 'wpa_insert_roles' ) == "on" ) {
-										echo 'checked="checked" ';
-									} ?>/> <label
-										for="wpa_insert_roles"><?php _e( 'Add landmark roles to HTML5 structural elements', 'wp-accessibility' ); ?></label><br/><label
-										for="wpa_complementary_container"><?php _e( 'ID for complementary role', 'wp-accessibility' ); ?></label><input
-										type="text" id="wpa_complementary_container" name="wpa_complementary_container"
-										value="#<?php echo esc_attr( get_option( 'wpa_complementary_container' ) ); ?>"/>
-								</li>
 							</ul>
 						</fieldset>
 						<p>
@@ -1131,7 +1142,7 @@ function wpa_admin_menu() {
 					<p><?php _e( "If you've found WP Accessibility useful, then please consider <a href='http://wordpress.org/extend/plugins/wp-accessibility/'>rating it five stars</a>, <a href='http://www.joedolson.com/donate.php'>making a donation</a>, or <a href='http://translate.joedolson.com/projects/wp-accessibility'>helping with translation</a>.", 'wp-accessibility' ); ?></p>
 
 					<div>
-						<p><?php _e( '<a href="http://www.joedolson.com/donate.php">Make a donation today!</a> Every donation counts - donate $5, $20, or $100 and help me keep this plug-in running!', 'wp-to-twitter' ); ?></p>
+						<p><?php _e( '<a href="http://www.joedolson.com/donate.php">Make a donation today!</a> Your donation counts - donate $5, $20, or $100 and help me keep this plug-in running!', 'wp-to-twitter' ); ?></p>
 
 						<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 							<div>
@@ -1147,6 +1158,23 @@ function wpa_admin_menu() {
 			</div>
 		</div>
 
+		<?php if ( wpa_accessible_theme() ) { ?>
+		<div class="ui-sortable meta-box-sortables">
+			<div class="postbox">
+				<h3><?php _e( 'Your Theme', 'wp-accessibility' ); ?></h3>
+
+				<div class="inside">
+					<p>
+					<?php _e( "You're using a theme reviewed as <code>accessibility-ready</code> by the WordPress theme review team. Some options have been disabled in WP Accessibility because your theme has taken care of that issue.", 'wp-accessibility' ); ?>
+					</p>
+					<p>
+					<?php printf( __( 'Read more about the <a href="%s">WordPress accessibility-ready tag</a>', 'wp-accessibility' ), "https://make.wordpress.org/themes/handbook/review/accessibility/" ); ?>
+					</p>
+				</div>
+			</div>
+		</div>
+		<?php } ?>
+		
 		<div class="ui-sortable meta-box-sortables">
 			<div class="postbox">
 				<h3><?php _e( 'Accessibility References', 'wp-accessibility' ); ?></h3>
@@ -1482,7 +1510,7 @@ $plugins_string
 		<p>" .
 	     __( 'The following additional information will be sent with your support request:', 'wp-accessibility' )
 	     . "</p>
-		<div class='mc_support'>
+		<div class='wpa_support'>
 		" . wpautop( $data ) . "
 		</div>
 		</div>
@@ -1611,3 +1639,29 @@ function longdesc_add_attr( $html, $id, $caption, $title, $align, $url, $size, $
 }
 
 add_filter( 'image_send_to_editor', 'longdesc_add_attr', 10, 8 );
+
+/* Tests whether the current theme is labeled accessibility-ready */
+function wpa_accessible_theme() {
+	$theme = wp_get_theme();
+	$tags = $theme->get( 'Tags' );
+	if ( in_array( 'accessibility-ready', $tags ) ) {
+		return true;
+	}
+	return false;
+}
+
+add_action( 'init', 'wpa_dismiss_notice' );
+function wpa_dismiss_notice() {
+	if ( isset( $_GET['dismiss'] ) && $_GET['dismiss'] == 'update' ) {
+		update_option( 'wpa_update_notice', 1 );
+	}
+}
+
+add_action( 'admin_notices', 'wpa_update_notice' );
+function wpa_update_notice() {
+	if ( current_user_can( 'activate_plugins' ) && get_option( 'wpa_update_notice' ) == 0 || ! get_option( 'wpa_update_notice' ) ) {
+		$dismiss = admin_url( 'options-general.php?page=wp-accessibility/wp-accessibility.php&dismiss=update' );
+		$access_monitor = "https://wordpress.org/plugins/access-monitor/";
+		echo "<div class='updated fade'><p>" . sprintf( __( 'Have you seen my new accessibility plug-in? <a href="%1$s">Check out Access Monitor</a>! &nbsp; &nbsp; <a href="%2$s">Dismiss Notice<span class="dashicons dashicons-no" aria-hidden="true"></span></a>', 'wp-accessibility' ), $access_monitor, $dismiss ) . "</p></div>";
+	}
+}
