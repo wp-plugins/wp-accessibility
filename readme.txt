@@ -4,7 +4,7 @@ Donate link: http://www.joedolson.com/donate.php
 Tags: title, accessibility, accessible, navigation, wcag, a11y, section508, focus
 Requires at least: 3.4.2
 Tested up to: 4.1
-Stable tag: 1.3.10
+Stable tag: 1.3.11
 License: GPLv2 or later
 
 WP Accessibility fixes common accessibility issues in your WordPress site.
@@ -258,4 +258,4 @@ Even if WP Accessibility is running correctly, not all accessibility testing too
 
 == Upgrade Notice ==
 
-* 1.3.9 Lots of translation updates.
+* 1.3.11 - Aware of accessibility-ready themes; notice about Access Monitor; bug fix
