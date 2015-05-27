@@ -3,7 +3,7 @@ Contributors: joedolson
 Donate link: http://www.joedolson.com/donate.php
 Tags: title, accessibility, accessible, navigation, wcag, a11y, section508, focus, alt text
 Requires at least: 3.4.2
-Tested up to: 4.1.1
+Tested up to: 4.2.2
 Stable tag: 1.4.0
 License: GPLv2 or later
 
@@ -58,6 +58,13 @@ Visit the [WP Accessibility translations site](http://translate.joedolson.com/pr
 3. Customise your settings on the Settings > WP Accessibility page.
 
 == Changelog ==
+
+= 1.4.1 =
+
+* Bug fix: warning thrown if current theme does not have any tags.
+* Change: Use image to show 'needs alt', for easier deletion.
+* Fix: text_direction deprecated in bloginfo
+* Language updates: Spanish, Polish
 
 = 1.4.0 =
 
