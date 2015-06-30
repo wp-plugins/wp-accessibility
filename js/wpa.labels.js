@@ -9,7 +9,8 @@
 		var form_id = field.attr( 'id' );			
 		if ( form_id ) {
 			var label = $( 'label[for=' + form_id + ']' );
-			if ( !label.length ) {
+			var implicit = $( field ).parent( 'label' );
+			if ( !label.length && !implicit.length ) {
 				field.before( "<label for='" + form_id + "' class='wpa-screen-reader-text'>" + wpalabels[value] + "</label>" );
 			}
 		} else {
