@@ -1,10 +1,10 @@
 === WP Accessibility ===
 Contributors: joedolson
 Donate link: http://www.joedolson.com/donate.php
-Tags: title, accessibility, accessible, navigation, wcag, a11y, section508, focus, alt text
+Tags: title, accessibility, accessible, navigation, wcag, a11y, section508, focus, alt text, labels, aria
 Requires at least: 3.4.2
 Tested up to: 4.2.2
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 License: GPLv2 or later
 
 WP Accessibility fixes common accessibility issues in your WordPress site.
