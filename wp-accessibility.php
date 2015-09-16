@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Accessibility
 Plugin URI: http://www.joedolson.com/wp-accessibility/
-Description: Provides options to improve accessibility in your WordPress site, including removing title attributes.
+Description: Helps improve accessibility in your WordPress site, like removing title attributes.
 Version: 1.4.5
 Author: Joe Dolson
 Text Domain: wp-accessibility
