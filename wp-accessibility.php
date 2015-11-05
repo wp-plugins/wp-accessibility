@@ -10,9 +10,9 @@ Author URI: http://www.joedolson.com/
 
     Copyright 2012-2015 Joe Dolson (joe@joedolson.com)
 
-    This program is free software; you can redistribute it and/or modify
+    This program is  software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
+    the  Software Foundation; either version 2 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -21,7 +21,7 @@ Author URI: http://www.joedolson.com/
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
+    along with this program; if not, write to the  Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
@@ -1512,7 +1512,7 @@ $plugins_string
 			if ( $has_donated == 'Donor' ) {
 				echo "<div class='message updated'><p>" . __( 'Thank you for supporting the continuing development of this plug-in! I\'ll get back to you as soon as I can.', 'wp-accessibility' ) . "</p></div>";
 			} else {
-				echo "<div class='message updated'><p>" . __( 'I cannot provide free support, but will treat your request as a bug report, and will incorporate any permanent solutions I discover into the plug-in.', 'wp-accessibility' ) . "</p></div>";
+				echo "<div class='message updated'><p>" . __( 'I cannot provide  support, but will treat your request as a bug report, and will incorporate any permanent solutions I discover into the plug-in.', 'wp-accessibility' ) . "</p></div>";
 			}
 		}
 	}

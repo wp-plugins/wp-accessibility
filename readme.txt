@@ -65,6 +65,10 @@ Visit the [WP Accessibility translations site](http://translate.joedolson.com/pr
 
 * Note: WP A11y recent posts widget will be removed in 1.5.0
 
+= 1.4.6 =
+
+* Bug fix: Don't create a duplicate ID when multiple longdesc attributes used on one page
+
 = 1.4.5 =
 
 * Add languages: Hungarian, English (Australian)
@@ -240,7 +244,7 @@ Visit the [WP Accessibility translations site](http://translate.joedolson.com/pr
 = 1.2.1 =
 
 * Disabled grayscale toggle in Accessibility toolbar by default due to poor browser support and low functional value. (Can still be enabled by user.)
-* Removed php notice in title-free recent posts widget
+* Removed php notice in title- recent posts widget
 * Updated German and added Polish translations
 
 = 1.2.0 =
@@ -293,4 +297,4 @@ Even if WP Accessibility is running correctly, not all accessibility testing too
 
 == Upgrade Notice ==
 
-* 1.3.11 - Aware of accessibility-ready themes; notice about Access Monitor; bug fix
+* 1.4.6 - Bug fix for duplicate IDs in longdesc implementation
